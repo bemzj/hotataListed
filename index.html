@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+		<meta content="yes" name="apple-mobile-web-app-capable"/>
+	    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+	    <meta content="telephone=no" name="format-detection"/>
+		<title>好太太-上市</title>
+		<script type="text/javascript" src="js/lufylegend-1.10.1.min.js" ></script>
+		<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+		<style>
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			#video{
+				position:fixed;
+				top:0;
+				left:0;
+				width: 100%;
+				height: 100%;
+				display: none;
+				z-index: 100;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="hotata"></div>
+		<video
+			id="video" 
+			src="hotata.mp4"
+			preload="auto" 
+			webkit-playsinline="true" 
+			playsinline="true" 
+			x-webkit-airplay="allow" 
+			x5-video-player-type="h5" 
+			x5-video-player-fullscreen="true" 
+			x5-video-orientation="portraint"
+			style="object-fit:fill"
+		></video>
+		<audio id="gong"  preload  src="music/gong.mp3" hidden="hidden"></audio >
+		<script>
+			function audioAutoPlay(id,v){
+			    var audio = document.getElementById(id);
+			    audio.play();
+			    if(v==0)
+			    {
+			    	audio.pause();
+			    }
+			    document.addEventListener("WeixinJSBridgeReady", function () {
+			            audio.play();
+			            if(v==0)
+					    {
+					    	audio.pause();
+					    }
+			    }, false);
+			}
+			audioAutoPlay('video',0);
+		</script>
+		<script type="text/javascript" src="js/resource.js" ></script>
+		<script type="text/javascript" src="js/bemzjGame.js" ></script>
+		<script type="text/javascript" src="js/main.js" ></script>
+	</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+		<meta content="yes" name="apple-mobile-web-app-capable"/>
+	    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+	    <meta content="telephone=no" name="format-detection"/>
+		<title>好太太</title>
+		<link rel="stylesheet" href="css/reset.css" />
+		<link rel="stylesheet" href="css/demo.css" />
+		<link rel="stylesheet" href="css/ydui.css" />
+		<link rel="stylesheet" href="css/award.css" />		
+		<script type="text/javascript" src="js/rem.js" ></script>
+		<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+	</head>
+	<body>
+		<div id="award">
+			<ul>
+				<li>
+					<p>恭喜您！</p>
+				</li>
+				<li>
+					<p>获得好太太安迪人偶</p>
+				</li>
+				<li>
+					<img src="img/g1.png" />
+				</li>
+				<li>
+					<div class="floatl">
+						<p>姓名:</p>
+						<input type="" name="" id="" value="" placeholder="姓名"/>
+					</div>
+					<div class="floatl">
+						<p>手机:</p>
+						<input type="" name="" id="" value="" maxlength="11" placeholder="11位手机号码"/>
+					</div>
+					<div class="clearl"></div>
+				</li>
+				<li>
+					<p>城市:</p>
+					<input type="" name="" id="city" value="" placeholder="省/市/区"/>
+				</li>
+				<li>
+					<p>地址:</p>
+					<textarea  id="" value="" placeholder="请填写您的具体的收货地址"></textarea>
+				</li>
+				<li>
+					<a href="###"><img src="img/submit.png"/></a>
+				</li>
+			</ul>
+		</div>
+		<!--弹窗-->
+		<div id="popWin">
+			<div class="popWin">
+				<img src="img/popWindow.png" />
+				<div class="popIn">
+					<ul>
+						<li>
+							<p>您输入的手机号码有误</p>
+						</li>
+						<li>
+							<p>请重新输入</p>
+						</li>
+						<li>
+						    <a href="###" class="confirm"><img src="img/confirm.png"/></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/ydui.citys.js" ></script>
+		<script type="text/javascript" src="js/ydui.flexible.js" ></script>
+		<script type="text/javascript" src="js/ydui.js" ></script>
+		<script>
+			!function () {
+		        var $target = $('#city');
+		
+		        $target.citySelect();
+		
+		        $target.on('click', function (event) {
+		            event.stopPropagation();
+		            $target.citySelect('open');
+		        });
+		
+		        $target.on('done.ydui.cityselect', function (ret) {
+		            $(this).val(ret.provance + ' ' + ret.city + ' ' + ret.area);
+		        });
+		    }();	
+		    $('.confirm').bind('click',function(){
+		    	$('#popWin').hide();
+		    });
+		</script>
+	</body>
+</html>
