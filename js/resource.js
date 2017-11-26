@@ -1,4 +1,5 @@
-var url=APP_URL+'/';
+//var url=APP_URL+'/';
+var url="";
 //加载页面的图片
 var loadImg = [
 
@@ -58,6 +59,12 @@ var gameImg = [
 	{path:url+'img/index.jpg',type:'img',name:'index'},//主页
 	{path:url+'img/getRed.png',type:'img',name:'getRed'},//领取红利
 	{path:url+'img/getGift.png',type:'img',name:'getGift'},//领取礼物
+	{path:url+'img/activityBkg.jpg',type:'img',name:'activityBkg'},//活动说明
+	{path:url+'img/gBkg.jpg',type:'img',name:'gBkg'},//礼品中心
+	{path:url+'img/gbk.png',type:'img',name:'gbk'},//礼物背景
+	{path:url+'img/has.png',type:'img',name:'has'},//兑换
+	{path:url+'img/noHas.png',type:'img',name:'noHas'},//没兑换
+	{path:url+'img/g1.png',type:'img',name:'g1'},//代金券
 ];
 //全局变量
 var backLayer,musicLayer,loadLayer,imgList,home,gongLayer;
@@ -100,12 +107,63 @@ function getNumber(str){
 	base(this,LSprite,[]);
 	var self = this;
 	var mystr = str.toString().split('');
-	console.log(mystr);
 	self.addChild(new setText(0,3,36,"已有",'#f9eec6',true));
 	for(var i=0;i<mystr.length;i++)
 	{
 		self.addChild(new num(82+36*i,0,mystr[i]));
 	}
 	self.addChild(new setText(82+36*i,3,36,"人敲钟",'#f9eec6',true));
+}
+//礼物
+function giftes(id,x,y,h,tN,mText,sText){
+	base(this,LSprite,[]);
+	var self = this;
+	self.x = x;
+	self.y = y;
+	self.bitmap = getBitmap(imgList['gbk']);
+	self.addChild(self.bitmap);
+	self.has = getButton(imgList['has']);
+	self.has.x = 450;
+	self.has.y = 30;
+	self.addChild(self.has);
+	self.noHas = getBitmap(imgList['noHas']);
+	self.noHas.x = 450;
+	self.noHas.y = 30;
+	self.addChild(self.noHas);
+	self.id=id;
+	if(h==0)
+	{
+		self.has.visible = true;
+		self.noHas.visible = false;
+	}else{
+		self.has.visible = false;
+		self.noHas.visible = true;
+	}
+	self.has.addEventListener(LMouseEvent.MOUSE_DOWN,function(){
+		self.has.visible = false;
+		self.noHas.visible = true;
+		switch(self.id){
+			case 0:
+			case 1:
+				popWin("兑换成功，感谢您的参与！");
+				break;
+			default:
+				//礼品中心进入页面
+				$('iframe').show();
+				$('#hotata').hide();
+				break;
+		}
+	});
 	
+	//一个字段
+	if(tN==1)
+	{
+		self.mText = new setText(25,42,30,mText,"#b53833",true);
+		self.addChild(self.mText);
+	}else{
+		self.mText = new setText(25,29,30,mText,"#b53833",true);
+		self.addChild(self.mText);
+		self.sText = new setText(25,69,22,sText,"#b53833",true);
+		self.addChild(self.sText);
+	}
 }

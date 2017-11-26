@@ -232,12 +232,16 @@ function sharing(){
 	});
 }
 //获奖页面
-function award(){
+function award(text,name){
 	//$.get
 	var awardLayer = new LSprite();
 	backLayer.addChild(awardLayer);
 	var back = getBitmap(imgList['awardBkg']);
 	awardLayer.addChild(back);
+	var txt = new setText(0,0,42,text,'#fcda91');
+	txt.x = rCenterWidth(txt);
+	txt.y = 188;
+	awardLayer.addChild(txt);
 	//分享按钮
 	var shareRed = getButton(imgList['shareRed']);
 	awardLayer.addChild(shareRed);
@@ -251,18 +255,24 @@ function award(){
 	giftCenter.x = rCenterWidth(shareRed);;
 	giftCenter.y = 910;
 	bigAndSmall(giftCenter,2,2,1.0,0.02,0,true);
+	giftCenter.addEventListener(LMouseEvent.MOUSE_DOWN,function(){
+		awardLayer.remove();
+		giftsCenter();
+	});
 	//光
 	var alight = getBitmap(imgList['alight']);
 	awardLayer.addChild(alight);
 	bling(alight,0.5,1,0.6,true);
 	//礼物
-	var gift = getBitmap(imgList['gift']);
+	var gift = getBitmap(imgList[name]);
 	awardLayer.addChild(gift);
 	gift.x=rCenterWidth(gift);
 	gift.y=275;
 }
 //扭蛋
 function awardGame(){
+	backLayer.removeAllChild();
+	backLayer.die();
 	var tLayer = new LSprite();
 	backLayer.addChild(tLayer);
 	//1288
@@ -308,6 +318,10 @@ function awardGame(){
 	giftCenter.y = 1070;
 	giftCenter.x = 50;
 	bigAndSmall(giftCenter,2,2,1.0,0.02,0,true);
+	giftCenter.addEventListener(LMouseEvent.MOUSE_DOWN,function(){
+		tLayer.remove();
+		giftsCenter();
+	});
 	var shareRed = getButton(imgList['shareRed']);
 	tLayer.addChild(shareRed);
 	shareRed.y = 1070;
@@ -332,43 +346,66 @@ function awardGame(){
 	var sLayer = new LSprite();
 	tLayer.addChild(sLayer);
 	sLayer.graphics.drawRect(0,"#ffffff",[95,688,560,100],false,"#ffffff");
-	sLayer.addEventListener(LMouseEvent.MOUSE_DOWN,function(){
-		sLayer.removeEventListener(LMouseEvent.MOUSE_DOWN);
-		LTweenLite.remove(hTween);
-		hand.remove();
-		LTweenLite.to(shank02,0.1,{alpha:1.0});
-		LTweenLite.to(shank01,0.1,{alpha:0});
-		setTimeout(function(){
-			LTweenLite.to(shank01,0.1,{alpha:1.0});
-			LTweenLite.to(shank02,0.1,{alpha:0});
-		},200);
-		for(var i=0;i<ballx.length;i++)
+	
+	$.get('json/cishu.json',function(data){
+		if(data.has==0)
 		{
-			ball[i].play(t[i]);
+			//手
+			var hand = getBitmap(imgList['hand']);
+			hand.x = rCenterWidth(hand);
+			hand.y= 780;
+			tLayer.addChild(hand);
+			var hTween = LTweenLite.to(hand,0.5,{y:740,alpha:0,loop:true,onComplete:function(){
+				hand.alpha = 1;
+				hand.y = 780;
+			}});
+		}else{
+			popWin("您已成功领取！","分享红利给好友吧!");
 		}
-		//$.get
-		/*
-		 * 礼物 是 g1 到  g7排序
-		 * 但是现在只要 g5，尴尬
-		 */
-		setTimeout(function(){
-			$('iframe').show();
-			$('#hotata').hide();
-		},3000);
+		sLayer.addEventListener(LMouseEvent.MOUSE_DOWN,function(){			
+			if(data.has==0){
+				sLayer.removeEventListener(LMouseEvent.MOUSE_DOWN);
+				LTweenLite.remove(hTween);
+				hand.remove();
+				LTweenLite.to(shank02,0.1,{alpha:1.0});
+				LTweenLite.to(shank01,0.1,{alpha:0});
+				setTimeout(function(){
+					LTweenLite.to(shank01,0.1,{alpha:1.0});
+					LTweenLite.to(shank02,0.1,{alpha:0});
+				},200);
+				for(var i=0;i<ballx.length;i++)
+				{
+					ball[i].play(t[i]);
+				}
+				//$.get
+				/*
+				 * 礼物 是 g1 到  g7排序
+				 * 但是现在只要 g5，尴尬
+				 */
+				setTimeout(function(){
+					$.get('json/getGift.json',function(data){
+						if(data.id==1)
+						{
+							award("获得好太太100元代金券","g1");
+						}else{
+							$('iframe').show();
+							$('#hotata').hide();
+						}
+					})
+				},3000);
+			}else{
+				popWin("您已成功领取！","分享红利给好友吧!");
+			}
+		});
 	});
-	//手
-	var hand = getBitmap(imgList['hand']);
-	hand.x = rCenterWidth(hand);
-	hand.y= 780;
-	tLayer.addChild(hand);
-	var hTween = LTweenLite.to(hand,0.5,{y:740,alpha:0,loop:true,onComplete:function(){
-		hand.alpha = 1;
-		hand.y = 780;
-	}})
+	
+	
 	shareRed.addEventListener(LMouseEvent.MOUSE_DOWN,sharing);
 }
 //老虎机
 function taiger(){
+	backLayer.removeAllChild();
+	backLayer.die();
 	var tLayer = new LSprite();
 	backLayer.addChild(tLayer);
 	tLayer.graphics.drawRect(0,"#ed2456",[0,0,750,1206],true,'#242629');
@@ -392,6 +429,17 @@ function taiger(){
 	wd.y=280;
 	tLayer.addChild(wd);
 	//礼品中心
+	var giftCenter = getButton(imgList['giftCenter']);
+	tLayer.addChild(giftCenter);
+	giftCenter.y = 1070;
+	giftCenter.x = 50;
+	bigAndSmall(giftCenter,2,2,1.0,0.02,0,true);
+	var shareRed = getButton(imgList['shareRed']);
+	tLayer.addChild(shareRed);
+	shareRed.y = 1070;
+	shareRed.x = 382;
+	bigAndSmall(shareRed,2,2,1.0,0.02,0,true);	
+	
 	var shank01 = getBitmap(imgList['shank01']);
 	shank01.x = 684;
 	shank01.y=314;
@@ -402,24 +450,38 @@ function taiger(){
 	shank02.y=358;
 	tLayer.addChild(shank02);
 	shank02.alpha = 0;
-	setTimeout(function(){
-		LTweenLite.to(shank02,0.1,{alpha:1.0});
-		LTweenLite.to(shank01,0.1,{alpha:0});
-		LTweenLite.to(awardGift1,0.2,{loop:true,y:820,onComplete:function(){
-			awardGift1.y = 160;
-		}});
-		LTweenLite.to(awardGift2,0.2,{loop:true,y:160,onComplete:function(){
-			awardGift2.y = -500;
-		}});
-		setTimeout(function(){
-			LTweenLite.to(shank01,0.1,{alpha:1.0});
-			LTweenLite.to(shank02,0.1,{alpha:0});
-		},200);
-		setTimeout(function(){
-			award();
-			tLayer.remove();
-		},2500);
-	},1000);
+	//检测是够已经获得红利
+	$.get('json/cishu.json',function(data){
+		if(data.has==0)
+		{
+			setTimeout(function(){
+				LTweenLite.to(shank02,0.1,{alpha:1.0});
+				LTweenLite.to(shank01,0.1,{alpha:0});
+				LTweenLite.to(awardGift1,0.2,{loop:true,y:820,onComplete:function(){
+					awardGift1.y = 160;
+				}});
+				LTweenLite.to(awardGift2,0.2,{loop:true,y:160,onComplete:function(){
+					awardGift2.y = -500;
+				}});
+				setTimeout(function(){
+					LTweenLite.to(shank01,0.1,{alpha:1.0});
+					LTweenLite.to(shank02,0.1,{alpha:0});
+				},200);
+				setTimeout(function(){
+					award("获得1288元购GW-1561","gift");
+					tLayer.remove();
+				},2500);
+			},1000);
+		}else{
+			popWin("您已成功领取！","分享红利给好友吧！")
+			giftCenter.addEventListener(LMouseEvent.MOUSE_DOWN,function(){
+				tLayer.remove();
+				giftsCenter();
+			});
+			shareRed.addEventListener(LMouseEvent.MOUSE_DOWN,sharing);
+		}
+	})
+	
 }
 //主页
 function index(){
@@ -441,20 +503,178 @@ function index(){
 	getRed.y = 1070;
 	getRed.x = 50;
 	bigAndSmall(getRed,2,2,1.0,0.02,0,true);
-	getRed.addEventListener(LMouseEvent.MOUSE_DOWN,taiger);
+	getRed.addEventListener(LMouseEvent.MOUSE_DOWN,function(){
+		indexLayer.die();
+		indexLayer.remove();
+		taiger();
+	});
 	//领取礼品
 	var getGift = getButton(imgList['getGift']);
 	indexLayer.addChild(getGift);
 	getGift.y = 1070;
 	getGift.x = 382;
 	bigAndSmall(getGift,2,2,1.0,0.02,0,true);
-	getGift.addEventListener(LMouseEvent.MOUSE_DOWN,awardGame);
+	getGift.addEventListener(LMouseEvent.MOUSE_DOWN,function(){
+		indexLayer.die();
+		indexLayer.remove();
+		awardGame();
+	});
 	//活动说明
 	var activity = getButton(imgList['activity']);
 	indexLayer.addChild(activity);
 	activity.x = 510;
+	activity.addEventListener(LMouseEvent.MOUSE_DOWN,activityShow);
 	//礼品中心
-	var activity = getButton(imgList['activity']);
-	indexLayer.addChild(activity);
-	activity.x = 628;
+	var center = getButton(imgList['center']);
+	indexLayer.addChild(center);
+	center.x = 628;
+	center.addEventListener(LMouseEvent.MOUSE_DOWN,giftsCenter);
+}
+//活动说明
+function activityShow(){
+	var aLayer = new LSprite();
+	backLayer.addChild(aLayer);
+	aLayer.graphics.drawRect(0,"#000000",[0,0,LGlobal.width,LGlobal.height],0,"#ffffff");
+	aLayer.addEventListener(LMouseEvent.MOUSE_DOWN,setNull);
+	//活动背景
+	var back= getBitmap(imgList['activityBkg']);
+	aLayer.addChild(back);
+	//
+	var txt = [
+		"活动时间：11月20日-11月27日",
+		"参与“领取特权”必得好太太优惠券",
+		"参与“上市好礼”有机会获得实物礼品",
+		"每个活动每个id仅限参与一次",
+		"活动范围：中国大陆（不含港澳台地区）",
+		"最终解释权归好太太集团所有"
+		];
+	var texts =[];
+	var ty = [236,354,472,595,714,834];
+	for(var i=0;i<txt.length;i++)
+	{
+		aLayer.addChild(new setText(145,ty[i],30,txt[i],"#e2c994"));
+	}
+	
+	var returnIndex = new LSprite();
+	aLayer.addChild(returnIndex);
+	returnIndex.graphics.drawRect(0,"#000000",[215,1030,320,90],false,"#ffffff");
+	returnIndex.addEventListener(LMouseEvent.MOUSE_DOWN,function(){
+		index();
+		setTimeout(function(){
+			aLayer.remove();
+		},500);
+	});
+}
+//礼品中心
+function giftsCenter(){
+	var gLayer = new LSprite();
+	backLayer.addChild(gLayer);
+	gLayer.graphics.drawRect(0,"#000000",[0,0,LGlobal.width,LGlobal.height],0,"#ffffff");
+	gLayer.addEventListener(LMouseEvent.MOUSE_DOWN,setNull);
+	//活动背景
+	var back= getBitmap(imgList['gBkg']);
+	gLayer.addChild(back);
+	//测试
+	var giftLayers = new LSprite();
+	var nullscroll = new LBitmap(new LBitmapData(imgList['null']));//实例化空白条
+	var scroll = new LScrollbar(giftLayers,641,830,{back:nullscroll,select:nullscroll,arraw:nullscroll},true,true);//滚动条
+	gLayer.addChild(scroll);//添加滚动条
+	scroll.x = 55;
+	scroll.y = 200;
+	/*
+	 * 好太太100元代金券     编号为0
+	 * 1288元购晾衣架GW-1561 编号为1
+	 * 智能垃圾桶 GL-H001D 编号为2
+	 * 炫彩简约衣架㆒琥珀金（16个） 编号为3
+	 * 好太太抱枕  编号为4
+	 * 好太太安迪人偶  编号为5
+	 * 好太太智能晾衣机GW-1653 编号为4
+	 */
+	var gText = ["好太太100元代金券","1288元购晾衣架GW-1561","智能垃圾桶 GL-H001D","炫彩简约衣架㆒琥珀金（16个）","好太太抱枕","好太太安迪人偶 ","好太太智能晾衣机GW-1653"];
+	$.get('json/gift.json',function(data){
+		for(var i=0;i<data.all.length;i++)
+		{
+			switch(data.all[i].id)
+			{
+				case 0:
+				case 1:
+					giftLayers.addChild(new giftes(data.all[i].id,0,141*i,0,1,gText[data.all[i].id]));
+					break;
+				case 2:
+				case 3:
+				case 4:
+				case 5:
+				case 6:
+					giftLayers.addChild(new giftes(data.all[i].id,0,141*i,0,2,gText[data.all[i].id],"订单号："+data.all[i].dan));
+					break;
+			}
+		}
+	});
+	//null
+	var nullLayer = new LSprite();
+	gLayer.addChild(nullLayer);
+	nullLayer.graphics.drawRect(0,"#000000",[0,1030,LGlobal.width,176],0,"#ffffff");
+	nullLayer.addEventListener(LMouseEvent.MOUSE_DOWN,setNull);
+	//返回首页
+	var returnIndex = new LSprite();
+	gLayer.addChild(returnIndex);
+	returnIndex.graphics.drawRect(0,"#000000",[42,1040,320,90],false,"#ffffff");
+	returnIndex.addEventListener(LMouseEvent.MOUSE_DOWN,function(){
+		index();
+		setTimeout(function(){
+			gLayer.remove();
+		},500);
+	});
+	//附近门店
+	var nearlLayer = new LSprite();
+	gLayer.addChild(nearlLayer);
+	nearlLayer.graphics.drawRect(0,"#000000",[370,1040,320,90],false,"#ffffff");
+	nearlLayer.addEventListener(LMouseEvent.MOUSE_DOWN,function(){
+		window.location.href="store.html";
+	});
+}
+//通用弹窗
+function popWin(text1,text2){
+	var popLayer = new LSprite();
+	backLayer.addChild(popLayer);
+	popLayer.graphics.drawRect(0,"#000000",[0,0,LGlobal.width,LGlobal.height],true,"rgba(0,0,0,0.75)");
+	popLayer.addEventListener(LMouseEvent.MOUSE_DOWN,setNull);
+	//活动背景
+	var popWindow= getBitmap(imgList['popWindow']);
+	popWindow.x = rCenterWidth(popWindow);
+	popWindow.y = rCenterHeight(popWindow);
+	popLayer.addChild(popWindow);
+	
+	var txt1;
+	var txt2;
+	if(!text2)
+	{
+		//确定
+		var confirm= getButton(imgList['confirm']);
+		confirm.x = rCenterWidth(confirm);
+		confirm.y = popWindow.y+230;
+		popLayer.addChild(confirm);
+		txt1 = new setText(0,0,40,text1,"#fcda91");
+		txt1.x = rCenterWidth(txt1);
+		txt1.y = popWindow.y+130;
+		popLayer.addChild(txt1);
+	}else{
+		//确定
+		var confirm= getButton(imgList['confirm']);
+		confirm.x = rCenterWidth(confirm);
+		confirm.y = popWindow.y+250;
+		popLayer.addChild(confirm);
+		txt1 = new setText(0,0,40,text1,"#fcda91");
+		txt1.x = rCenterWidth(txt1);
+		txt1.y = popWindow.y+100;
+		popLayer.addChild(txt1);
+		txt2 = new setText(0,0,40,text2,"#fcda91");
+		txt2.x = rCenterWidth(txt2);
+		txt2.y = popWindow.y+170;
+		popLayer.addChild(txt2);
+	}
+	
+	confirm.addEventListener(LMouseEvent.MOUSE_DOWN,function(){
+		popLayer.remove();
+	});
 }
