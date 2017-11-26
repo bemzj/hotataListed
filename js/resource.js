@@ -1,4 +1,4 @@
-var url="";
+var url=APP_URL+'/';
 //加载页面的图片
 var loadImg = [
 

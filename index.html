@@ -7,7 +7,10 @@
 	    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
 	    <meta content="telephone=no" name="format-detection"/>
 		<title>好太太-上市</title>
-		<script type="text/javascript" src="js/lufylegend-1.10.1.min.js" ></script>
+		<script type="text/javascript" src="__STYLE__/js/lufylegend-1.10.1.min.js" ></script>
+        <script type="text/javascript">
+            var APP_URL="__STYLE__";
+        </script>
 		<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 		<style>
 			*{
@@ -39,7 +42,7 @@
 		<div id="hotata"></div>
 		<video
 			id="video" 
-			src="hotata.mp4"
+			src="__STYLE__/hotata.mp4"
 			preload="auto" 
 			webkit-playsinline="true" 
 			playsinline="true" 
@@ -49,7 +52,7 @@
 			x5-video-orientation="portraint"
 			style="object-fit:fill"
 		></video>
-		<audio id="gong"  preload  src="music/gong.mp3" hidden="hidden"></audio >
+		<audio id="gong"  preload  src="__STYLE__/music/gong.mp3" hidden="hidden"></audio >
 		<script>
 			function audioAutoPlay(id,v){
 			    var audio = document.getElementById(id);
@@ -68,9 +71,9 @@
 			}
 			audioAutoPlay('video',0);
 		</script>
-		<iframe src="award.html"></iframe>
-		<script type="text/javascript" src="js/resource.js" ></script>
-		<script type="text/javascript" src="js/bemzjGame.js" ></script>
-		<script type="text/javascript" src="js/main.js" ></script>
+		<iframe src="__STYLE__/award.html"></iframe>
+		<script type="text/javascript" src="__STYLE__/js/resource.js" ></script>
+		<script type="text/javascript" src="__STYLE__/js/bemzjGame.js" ></script>
+		<script type="text/javascript" src="__STYLE__/js/main.js" ></script>
 	</body>
 </html>
