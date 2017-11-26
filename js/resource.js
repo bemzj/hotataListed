@@ -53,9 +53,14 @@ var gameImg = [
 	{path:url+'img/submit.png',type:'img',name:'submit'},//手
 	{path:url+'img/confirm.png',type:'img',name:'confirm'},//确定
 	{path:url+'img/popWindow.png',type:'img',name:'popWindow'},//弹窗
+	{path:url+'img/center.png',type:'img',name:'center'},//中心
+	{path:url+'img/activity.png',type:'img',name:'activity'},//活动
+	{path:url+'img/index.jpg',type:'img',name:'index'},//主页
+	{path:url+'img/getRed.png',type:'img',name:'getRed'},//领取红利
+	{path:url+'img/getGift.png',type:'img',name:'getGift'},//领取礼物
 ];
 //全局变量
-var backLayer,musicLayer,loadLayer,imgList,home;
+var backLayer,musicLayer,loadLayer,imgList,home,gongLayer;
 //egges
 function egges(x,y,name,arr,n){
 	base(this,LSprite,[]);
@@ -87,7 +92,7 @@ function num(x,y,text){
 	self.y = y;
 	self.bitmap = getBitmap(imgList['nBkg']);
 	self.addChild(self.bitmap);	
-	self.text = new setText(3,3,42,text,'#f9eec6',true);
+	self.text = new setText(2,3,42,text,'#f9eec6',true);
 	self.addChild(self.text);
 }
 //获取人数

@@ -20,7 +20,7 @@ function loadProgress(pre){
 //游戏开始
 function startGame(result){
 	imgList=result;
-	homePage();
+	index();
 }
 //视频播放
 function videoShow(){
@@ -107,11 +107,14 @@ function homePage(){
 function hitGong(){
 	
 	//渐变	
-	var gongLayer = new LSprite();
+	gongLayer = new LSprite();
 	backLayer.addChild(gongLayer);
 	gongLayer.alpha = 0;
-	LTweenLite.to(gongLayer,2.0,{alpha:1.0});
-	LTweenLite.to(home,2.0,{alpha:0});
+	LTweenLite.to(gongLayer,1.0,{alpha:1.0});
+	LTweenLite.to(home,1.5,{alpha:0,onComplete:function(){
+		home.remove();
+		home=null;
+	}});
 	var back = getBitmap(imgList['gongBack']);
 	gongLayer.addChild(back);
 	//大锣
@@ -165,6 +168,7 @@ function hitGong(){
 			document.getElementById('gong').play();
 			LTweenLite.to(lmap,1.0,{alpha:1}).to(light,0.5,{alpha:1}).to(line,1.5,{alpha:1,onComplete:function(){
 				document.getElementById('gong').pause();
+				index();
 			}});
 		}});
 	});
@@ -229,6 +233,7 @@ function sharing(){
 }
 //获奖页面
 function award(){
+	//$.get
 	var awardLayer = new LSprite();
 	backLayer.addChild(awardLayer);
 	var back = getBitmap(imgList['awardBkg']);
@@ -341,6 +346,15 @@ function awardGame(){
 		{
 			ball[i].play(t[i]);
 		}
+		//$.get
+		/*
+		 * 礼物 是 g1 到  g7排序
+		 * 但是现在只要 g5，尴尬
+		 */
+		setTimeout(function(){
+			$('iframe').show();
+			$('#hotata').hide();
+		},3000);
 	});
 	//手
 	var hand = getBitmap(imgList['hand']);
@@ -401,6 +415,46 @@ function taiger(){
 			LTweenLite.to(shank01,0.1,{alpha:1.0});
 			LTweenLite.to(shank02,0.1,{alpha:0});
 		},200);
+		setTimeout(function(){
+			award();
+			tLayer.remove();
+		},2500);
 	},1000);
 }
-
+//主页
+function index(){
+	
+	var indexLayer = new LSprite();
+	backLayer.addChild(indexLayer);
+	indexLayer.alpha = 0;
+	LTweenLite.to(indexLayer,0.5,{alpha:1,onComplete:function(){
+		if(gongLayer)
+		{
+			gongLayer.remove();
+		}
+	}});
+	var back= getBitmap(imgList['index']);
+	indexLayer.addChild(back);
+	//领取红利
+	var getRed = getButton(imgList['getRed']);
+	indexLayer.addChild(getRed);
+	getRed.y = 1070;
+	getRed.x = 50;
+	bigAndSmall(getRed,2,2,1.0,0.02,0,true);
+	getRed.addEventListener(LMouseEvent.MOUSE_DOWN,taiger);
+	//领取礼品
+	var getGift = getButton(imgList['getGift']);
+	indexLayer.addChild(getGift);
+	getGift.y = 1070;
+	getGift.x = 382;
+	bigAndSmall(getGift,2,2,1.0,0.02,0,true);
+	getGift.addEventListener(LMouseEvent.MOUSE_DOWN,awardGame);
+	//活动说明
+	var activity = getButton(imgList['activity']);
+	indexLayer.addChild(activity);
+	activity.x = 510;
+	//礼品中心
+	var activity = getButton(imgList['activity']);
+	indexLayer.addChild(activity);
+	activity.x = 628;
+}
