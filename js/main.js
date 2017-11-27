@@ -1,5 +1,5 @@
 //游戏初始化
-LInit(1000/40,"hotata",750,1207,main);
+LInit(1000/40,"hotata",750,1202,main);
 //游戏入口主函数
 function main(){
     LGlobal.stageScale = LStageScaleMode.EXACT_FIT;//设置全屏变量
@@ -13,6 +13,7 @@ function main(){
 //预加载页面
 function loadImging(result){
 	LLoadManage.load(gameImg,loadProgress,startGame);
+	musicLayer.addChild(new musicBtn(20,20,0.8,0.8,result['music'],'bg'));
 }
 //加载函数
 function loadProgress(pre){
@@ -20,16 +21,73 @@ function loadProgress(pre){
 //游戏开始
 function startGame(result){
 	imgList=result;
-	index();
+	videoShow();
 }
 //视频播放
 function videoShow(){
-	$('#video').fadeIn();
-	$('#video')[0].play();
-	document.getElementById('video').onended=function(){
-		$('#video').fadeOut();
-		homePage();
-	};	
+	var browser = {
+		versions: function() {
+			var u = navigator.userAgent,
+				app = navigator.appVersion;
+			return { //移动终端浏览器版本信息
+				trident: u.indexOf('Trident') > -1, //IE内核
+				presto: u.indexOf('Presto') > -1, //opera内核
+				webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+				gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+				mobile: !!u.match(/AppleWebKit.*Mobile/i) || !!u.match(/MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE/), //是否为移动终端
+				ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+				android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+				iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者QQHD浏览器
+				iPad: u.indexOf('iPad') > -1, //是否iPad
+				webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
+			};
+		}(),
+		language: (navigator.browserLanguage || navigator.language).toLowerCase()
+	}
+	//如果是苹果手机
+	if(browser.versions.iPhone || browser.versions.iPad || browser.versions.ios) {
+		$('#video').fadeIn();
+		document.getElementById('bg').pause();
+		$('#video')[0].play();		
+		document.getElementById('video').onended=function(){
+			$('#video').fadeOut();
+			document.getElementById('bg').play();
+			homePage();
+		};
+	}
+	//如果是安卓手机
+	if(browser.versions.android) {
+		$('#videoBack').fadeIn();
+		$('#video').fadeIn();
+		var vcount = false;
+		$('#videoBack img').css('opacity',0.2);
+		var vb = setInterval(function(){
+			if(vcount==true)
+			{
+				vcount = false;
+				$('#videoBack img').css('opacity',0.1);
+			}else{
+				vcount = true;
+				$('#videoBack img').css('opacity',0.25);
+			}
+		},500);
+		$('#videoBack img').bind('touchstart',function(){
+			document.getElementById('bg').pause();
+			$('#videoBack').hide();
+			$('#video')[0].play();
+			$('#hotata').hide();
+			document.getElementById('video').onended=function(){
+				$('#video').fadeOut(100);
+				document.getElementById('bg').play();
+				$('#hotata').css('z-index',1000);
+				$('#hotata').fadeIn(100,function(){
+					homePage();
+				});
+				
+			};
+		});
+	}
+		
 }
 //首页
 function homePage(){
@@ -166,9 +224,15 @@ function hitGong(){
 				}
 			}});
 			document.getElementById('gong').play();
-			LTweenLite.to(lmap,1.0,{alpha:1}).to(light,0.5,{alpha:1}).to(line,1.5,{alpha:1,onComplete:function(){
-				document.getElementById('gong').pause();
-				index();
+			LTweenLite.to(lmap,1.5,{alpha:1}).to(light,0.5,{alpha:1}).to(line,1.5,{alpha:1,onComplete:function(){
+				document.getElementById('hj').pause();
+				setTimeout(index,500);
+				
+			},onStart:function(){
+				setTimeout(function(){
+					document.getElementById('gong').pause();
+					document.getElementById('hj').play();
+				},500);
 			}});
 		}});
 	});
@@ -312,15 +376,15 @@ function awardGame(){
 	shankLeft.x=16;
 	shankLeft.y=416;
 	tLayer.addChild(shankLeft);
-	//礼品中心
-	var giftCenter = getButton(imgList['giftCenter']);
-	tLayer.addChild(giftCenter);
-	giftCenter.y = 1070;
-	giftCenter.x = 50;
-	bigAndSmall(giftCenter,2,2,1.0,0.02,0,true);
-	giftCenter.addEventListener(LMouseEvent.MOUSE_DOWN,function(){
+	//返回首页
+	var backIndex = getButton(imgList['backIndex']);
+	tLayer.addChild(backIndex);
+	backIndex.y = 1070;
+	backIndex.x = 50;
+	bigAndSmall(backIndex,2,2,1.0,0.02,0,true);
+	backIndex.addEventListener(LMouseEvent.MOUSE_DOWN,function(){
 		tLayer.remove();
-		giftsCenter();
+		index();
 	});
 	var shareRed = getButton(imgList['shareRed']);
 	tLayer.addChild(shareRed);
@@ -399,6 +463,14 @@ function awardGame(){
 		});
 	});
 	
+	//礼品中心
+	var center = getButton(imgList['center']);
+	tLayer.addChild(center);
+	center.x = 628;
+	center.addEventListener(LMouseEvent.MOUSE_DOWN,function(){
+		sLayer.remove();
+		giftsCenter();
+	});
 	
 	shareRed.addEventListener(LMouseEvent.MOUSE_DOWN,sharing);
 }
@@ -588,7 +660,7 @@ function giftsCenter(){
 	 * 炫彩简约衣架㆒琥珀金（16个） 编号为3
 	 * 好太太抱枕  编号为4
 	 * 好太太安迪人偶  编号为5
-	 * 好太太智能晾衣机GW-1653 编号为4
+	 * 好太太智能晾衣机GW-1653 编号为6
 	 */
 	var gText = ["好太太100元代金券","1288元购晾衣架GW-1561","智能垃圾桶 GL-H001D","炫彩简约衣架㆒琥珀金（16个）","好太太抱枕","好太太安迪人偶 ","好太太智能晾衣机GW-1653"];
 	$.get('json/gift.json',function(data){

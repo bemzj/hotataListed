@@ -2,7 +2,7 @@
 var url="";
 //加载页面的图片
 var loadImg = [
-
+	{path:url+'img/music.png',type:'img',name:'music'},//音乐
 ]
 //加载的图片的资源
 var gameImg = [
@@ -65,6 +65,9 @@ var gameImg = [
 	{path:url+'img/has.png',type:'img',name:'has'},//兑换
 	{path:url+'img/noHas.png',type:'img',name:'noHas'},//没兑换
 	{path:url+'img/g1.png',type:'img',name:'g1'},//代金券
+	{path:url+'img/hands.png',type:'img',name:'hands'},//手
+	{path:url+'img/backIndex.png',type:'img',name:'backIndex'},//返回首页
+	{path:url+'img/return.png',type:'img',name:'return'},//返回
 ];
 //全局变量
 var backLayer,musicLayer,loadLayer,imgList,home,gongLayer;

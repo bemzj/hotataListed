@@ -19,6 +19,13 @@
 				padding: 0;
 				margin: 0;
 			}
+			body{
+				position: relative;
+				width: 100%;
+				height: 100%;
+				background:url(img/back.jpg) no-repeat;
+				/*background-size: 100% 100%;*/
+			}
 			#video{
 				position:fixed;
 				top:0;
@@ -27,6 +34,7 @@
 				height: 100%;
 				display: none;
 				z-index: 100;
+				object-position: center top;
 			}
 			iframe{
 				position: fixed;
@@ -38,13 +46,39 @@
 				border: 0;
 				display: none;
 			}
+			#videoBack{
+				position: fixed;
+				left: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+			    background:url(img/back.jpg) no-repeat;
+			    background-size: cover;
+			    z-index: 1000;
+			    display: flex;
+				justify-content: center;
+				align-items: center;
+				flex-direction: column;
+				display: -webkit-flex;
+				-webkit-align-items: center;
+				-webkit-justify-content: center;
+				-webkit-flex-direction: column;
+			}
+			#videoBack img{
+				width: 64px;
+				opacity: 0.25;
+				-ms-transition: opacity 0.5s;
+				-webkit-transition: opacity 0.5s;
+				-moz-transition: opacity 0.5s;
+				transition: opacity 0.5s;
+			}
 		</style>
 	</head>
 	<body>
 		<div id="hotata"></div>
 		<video
 			id="video" 
-			src="__STYLE__/hotata.mp4"
+			src="hotata.mp4"
 			preload="auto" 
 			webkit-playsinline="true" 
 			playsinline="true" 
@@ -54,7 +88,12 @@
 			x5-video-orientation="portraint"
 			style="object-fit:fill"
 		></video>
-		<audio id="gong"  preload  src="__STYLE__/music/gong.mp3" hidden="hidden"></audio >
+		<div id="videoBack" style="display: none;">
+			<img src="img/hands.png" />
+		</div>
+		<audio id="gong"  preload  src="music/gong.mp3" hidden="hidden"></audio >
+		<audio id="hj"  preload  src="music/hj.mp3" hidden="hidden"></audio >
+		<audio id="bg" autoplay="autoplay" loop="loop" preload  src="http://m.gani.com.cn/activity/newProduct/music/bg.mp3" hidden="hidden"></audio >
 		<script>
 			function audioAutoPlay(id,v){
 			    var audio = document.getElementById(id);
@@ -71,9 +110,11 @@
 					    }
 			    }, false);
 			}
+			audioAutoPlay('bg');
+			audioAutoPlay('gong',0);
 			audioAutoPlay('video',0);
 		</script>
-		<iframe src="award.html"></iframe>
+		<iframe src="award.html?v=0"></iframe>
 		<script type="text/javascript" src="js/resource.js" ></script>
 		<script type="text/javascript" src="js/bemzjGame.js" ></script>
 		<script type="text/javascript" src="js/main.js" ></script>

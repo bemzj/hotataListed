@@ -58,7 +58,9 @@ function musicBtn(x,y,sx,sy,name,musicId){
 	var musicImg = new LBitmap(new LBitmapData(name));
 	musicImg.scaleX = sx;
 	musicImg.scaleY = sy;
-	
+	self.musicplay = LTweenLite.to(musicImg,1.0,{rotate:360,loop:true,onComplete:function(){
+		musicImg.rotate = 0;
+	}});
 	self.addChild(musicImg);
 	self.graphics.drawRect(0,'#000000',[0,0,musicImg.getWidth(),musicImg.getHeight()],false,'#ff0000');
 	self.addEventListener(LMouseEvent.MOUSE_DOWN,function(){
