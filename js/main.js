@@ -21,7 +21,7 @@ function loadProgress(pre){
 //游戏开始
 function startGame(result){
 	imgList=result;
-	videoShow();
+	index();
 }
 //视频播放
 function videoShow(){
@@ -101,54 +101,59 @@ function homePage(){
 	var logo = getBitmap(imgList['logo']);
 	home.addChild(logo);
 	logo.x=rCenterWidth(logo);
-	logo.y=103;
+	logo.y=47;
 	logo.alpha=0;
 	//主题
 	var Title = getBitmap(imgList['Title']);
 	home.addChild(Title);
 	Title.x=rCenterWidth(Title);
-	Title.y=257;
+	Title.y=165;
 	Title.alpha=0;
 	//主题1
 	var Title1 = getBitmap(imgList['Title1']);
 	home.addChild(Title1);
 	Title1.x=rCenterWidth(Title1);
-	Title1.y=625;
+	Title1.y=540;
 	Title1.alpha=0;
 	//主题2
 	var Title2 = getBitmap(imgList['Title2']);
 	home.addChild(Title2);
 	Title2.x=rCenterWidth(Title2);
-	Title2.y=712;
+	Title2.y=622;
 	Title2.alpha=0;
-	//主题2
-	var Title2 = getBitmap(imgList['Title2']);
-	home.addChild(Title2);
-	Title2.x=rCenterWidth(Title2);
-	Title2.y=712;
-	Title2.alpha=0;
-	//锣的背部
-	var gongBottom = getBitmap(imgList['gongBottom']);
-	home.addChild(gongBottom);
-	gongBottom.x=rCenterWidth(gongBottom);
-	gongBottom.y=888;
-	gongBottom.alpha=0;
 	//锣
 	var gong = getBitmap(imgList['gong']);
 	home.addChild(gong);
 	gong.x=rCenterWidth(gong)+1;
-	gong.y=890;
+	gong.y=770;
 	gong.alpha=0;
+	//锣的背部
+	var gongBottom = getBitmap(imgList['gongBottom']);
+	home.addChild(gongBottom);
+	gongBottom.x=rCenterWidth(gongBottom);
+	gongBottom.y=755;
+	gongBottom.alpha=0;
+	bigAndSmall(gongBottom,2,2,2.0,0.015,0,true);
+	//花
+	var flower = getBitmap(imgList['flower']);
+	home.addChild(flower);
+	flower.x=rCenterWidth(flower);
+	flower.y=720;
+	flower.alpha=0;
+	LTweenLite.to(flower,6,{rotate:360,loop:true,onComplete:function(){
+		flower.rotate = 0;
+	}})
 	//hit
 	var hit = getBitmap(imgList['hit']);
 	home.addChild(hit);
 	hit.x=350;
 	hit.y=970;
 	hit.alpha=0;
+	bigAndSmall(Title,2,2,1.0,0.02,0,true);
 	//逐层显示
 	LTweenLite.to(logo,0.5,{alpha:1.0}).to(Title,0.6,{alpha:1.0}).to(Title1,0.6,{alpha:1.0}).to(Title2,0.6,{alpha:1.0,onComplete:function(){
+		LTweenLite.to(flower,0.6,{alpha:1.0});
 		LTweenLite.to(gongBottom,0.6,{alpha:1.0}).to(hit,0.6,{alpha:1.0,onComplete:function(){
-			bigAndSmall(Title,2,2,1.0,0.02,0,true);
 			LTweenLite.to(hit,1.0,{y:950,x:345,scaleX:1.1,sacleY:1.1,rotate:20,loop:true}).to(hit,1.0,{y:970,x:350,rotate:0,scaleX:1.0,sacleY:1.0});
 			var hitLayer = new LSprite();
 			home.addChild(hitLayer);
@@ -175,11 +180,32 @@ function hitGong(){
 	}});
 	var back = getBitmap(imgList['gongBack']);
 	gongLayer.addChild(back);
+	//锣的背部
+	var gongBottom = getBitmap(imgList['gongBottom1']);
+	gongLayer.addChild(gongBottom);
+	gongBottom.x=rCenterWidth(gongBottom);
+	gongBottom.y=300;
+	bigAndSmall(gongBottom,2,2,2.0,0.02,0,true);
+	//花
+	var flower = getBitmap(imgList['flower']);
+	gongLayer.addChild(flower);
+	flower.scaleX = 1.4;
+	flower.scaleY = 1.4;
+	flower.x=rCenterWidth(flower);
+	flower.y=320;
+	LTweenLite.to(flower,6,{rotate:360,loop:true,onComplete:function(){
+		flower.rotate = 0;
+	}});
+	var Title = getBitmap(imgList['Title3']);
+	gongLayer.addChild(Title);
+	Title.x=rCenterWidth(Title);
+	Title.y=90;
+	bigAndSmall(Title,2,2,1.5,0.01,0,true);
 	//大锣
 	var gongBig = getBitmap(imgList['gongBig']);
 	gongLayer.addChild(gongBig);
 	gongBig.x=rCenterWidth(gongBig)+6;
-	gongBig.y=535;
+	gongBig.y=510;
 	//hit
 	var hitBig = getBitmap(imgList['hitBig']);
 	gongLayer.addChild(hitBig);
@@ -226,7 +252,7 @@ function hitGong(){
 			document.getElementById('gong').play();
 			LTweenLite.to(lmap,1.5,{alpha:1}).to(light,0.5,{alpha:1}).to(line,1.5,{alpha:1,onComplete:function(){
 				document.getElementById('hj').pause();
-				setTimeout(index,500);
+				setTimeout(index,1000);
 				
 			},onStart:function(){
 				setTimeout(function(){
@@ -441,6 +467,7 @@ function awardGame(){
 				{
 					ball[i].play(t[i]);
 				}
+				document.getElementById('a').play();
 				//$.get
 				/*
 				 * 礼物 是 g1 到  g7排序
@@ -448,6 +475,7 @@ function awardGame(){
 				 */
 				setTimeout(function(){
 					$.get('json/getGift.json',function(data){
+						document.getElementById('a').pause();
 						if(data.id==1)
 						{
 							award("获得好太太100元代金券","g1");
@@ -527,6 +555,7 @@ function taiger(){
 		if(data.has==0)
 		{
 			setTimeout(function(){
+				document.getElementById('t').play();
 				LTweenLite.to(shank02,0.1,{alpha:1.0});
 				LTweenLite.to(shank01,0.1,{alpha:0});
 				LTweenLite.to(awardGift1,0.2,{loop:true,y:820,onComplete:function(){
@@ -540,6 +569,7 @@ function taiger(){
 					LTweenLite.to(shank02,0.1,{alpha:0});
 				},200);
 				setTimeout(function(){
+					document.getElementById('t').pause();
 					award("获得1288元购GW-1561","gift");
 					tLayer.remove();
 				},2500);
@@ -611,26 +641,24 @@ function activityShow(){
 	//活动背景
 	var back= getBitmap(imgList['activityBkg']);
 	aLayer.addChild(back);
-	//
-	var txt = [
-		"活动时间：11月20日-11月27日",
-		"参与“领取特权”必得好太太优惠券",
-		"参与“上市好礼”有机会获得实物礼品",
-		"每个活动每个id仅限参与一次",
-		"活动范围：中国大陆（不含港澳台地区）",
-		"最终解释权归好太太集团所有"
-		];
-	var texts =[];
-	var ty = [236,354,472,595,714,834];
-	for(var i=0;i<txt.length;i++)
-	{
-		aLayer.addChild(new setText(145,ty[i],30,txt[i],"#e2c994"));
-	}
+	//测试
+	var giftLayers = new LSprite();
+	var nullscroll = new LBitmap(new LBitmapData(imgList['null']));//实例化空白条
+	var scroll = new LScrollbar(giftLayers,621,830,{back:nullscroll,select:nullscroll,arraw:nullscroll},true,true);//滚动条
+	aLayer.addChild(scroll);//添加滚动条
+	scroll.x = 67;
+	scroll.y = 200;	
+	var show= getBitmap(imgList['show']);
+	giftLayers.addChild(show);
 	
-	var returnIndex = new LSprite();
-	aLayer.addChild(returnIndex);
-	returnIndex.graphics.drawRect(0,"#000000",[215,1030,320,90],false,"#ffffff");
-	returnIndex.addEventListener(LMouseEvent.MOUSE_DOWN,function(){
+	//返回首页
+	var backIndex = getButton(imgList['backIndex']);
+	aLayer.addChild(backIndex);
+	backIndex.y = 1050;
+	backIndex.x = 215;
+	bigAndSmall(backIndex,2,2,1.0,0.02,0,true);
+	backIndex.addEventListener(LMouseEvent.MOUSE_DOWN,function(){
+		
 		index();
 		setTimeout(function(){
 			aLayer.remove();

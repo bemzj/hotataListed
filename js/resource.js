@@ -10,6 +10,7 @@ var gameImg = [
 	{path:url+'img/go.png',type:'img',name:'go'},//去
 	{path:url+'img/gong.png',type:'img',name:'gong'},//锣
 	{path:url+'img/gongBottom.png',type:'img',name:'gongBottom'},//锣的底部
+	{path:url+'img/gongBottom1.png',type:'img',name:'gongBottom1'},//锣的底部
 	{path:url+'img/hit.png',type:'img',name:'hit'},//敲
 	{path:url+'img/indexBack.jpg',type:'img',name:'indexBack'},//首页背景
 	{path:url+'img/back.jpg',type:'img',name:'back'},//首页背景
@@ -18,6 +19,7 @@ var gameImg = [
 	{path:url+'img/Title.jpg',type:'img',name:'Title'},//首页标题1
 	{path:url+'img/Title1.png',type:'img',name:'Title1'},//首页标题2
 	{path:url+'img/Title2.png',type:'img',name:'Title2'},//首页标题3
+	{path:url+'img/Title3.png',type:'img',name:'Title3'},//标题4
 	{path:url+'img/shareTitle01.png',type:'img',name:'shareTitle01'},//分享标题
 	{path:url+'img/share.png',type:'img',name:'share'},//箭头
 	{path:url+'img/shareTitle02.png',type:'img',name:'shareTitle02'},//分享标题
@@ -30,7 +32,6 @@ var gameImg = [
 	{path:url+'img/line.png',type:'img',name:'line'},//线
 	{path:url+'img/awardBkg.jpg',type:'img',name:'awardBkg'},//奖品背景
 	{path:url+'img/alight.png',type:'img',name:'alight'},//光
-	{path:url+'img/gift.png',type:'img',name:'gift'},//礼物
 	{path:url+'img/shareRed.png',type:'img',name:'shareRed'},//分享
 	{path:url+'img/getBkg.jpg',type:'img',name:'getBkg'},//摇奖背景
 	{path:url+'img/giftCenter.png',type:'img',name:'giftCenter'},//礼品中心
@@ -64,10 +65,19 @@ var gameImg = [
 	{path:url+'img/gbk.png',type:'img',name:'gbk'},//礼物背景
 	{path:url+'img/has.png',type:'img',name:'has'},//兑换
 	{path:url+'img/noHas.png',type:'img',name:'noHas'},//没兑换
-	{path:url+'img/g1.png',type:'img',name:'g1'},//代金券
+	{path:url+'img/gift.png',type:'img',name:'gift'},//1288
+	{path:url+'img/g1.png',type:'img',name:'g1'},//100代金券
+	{path:url+'img/g2.png',type:'img',name:'g2'},//人偶
+	{path:url+'img/g3.png',type:'img',name:'g3'},//抱枕
+	{path:url+'img/g4.png',type:'img',name:'g4'},//衣架
+	{path:url+'img/g5.png',type:'img',name:'g5'},//智能垃圾桶
+	{path:url+'img/g6.png',type:'img',name:'g6'},//5823
+	{path:url+'img/g7.png',type:'img',name:'g7'},//1583
 	{path:url+'img/hands.png',type:'img',name:'hands'},//手
 	{path:url+'img/backIndex.png',type:'img',name:'backIndex'},//返回首页
 	{path:url+'img/return.png',type:'img',name:'return'},//返回
+	{path:url+'img/flower.png',type:'img',name:'flower'},//花
+	{path:url+'img/show.png',type:'img',name:'show'},//
 ];
 //全局变量
 var backLayer,musicLayer,loadLayer,imgList,home,gongLayer;
