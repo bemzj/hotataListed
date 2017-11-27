@@ -2,7 +2,11 @@
 var url="";
 //加载页面的图片
 var loadImg = [
+	{path:url+'img/logo.png',type:'img',name:'logo'},//logo
 	{path:url+'img/music.png',type:'img',name:'music'},//音乐
+	{path:url+'img/loadBkg.jpg',type:'img',name:'loadBkg'},//加载背景
+	{path:url+'img/jin.png',type:'img',name:'jin'},//金粉
+	{path:url+'img/sun.jpg',type:'img',name:'sun'},//太阳
 ]
 //加载的图片的资源
 var gameImg = [
@@ -20,6 +24,8 @@ var gameImg = [
 	{path:url+'img/Title1.png',type:'img',name:'Title1'},//首页标题2
 	{path:url+'img/Title2.png',type:'img',name:'Title2'},//首页标题3
 	{path:url+'img/Title3.png',type:'img',name:'Title3'},//标题4
+	{path:url+'img/Title4.jpg',type:'img',name:'Title4'},//标题5
+	{path:url+'img/Title44.jpg',type:'img',name:'Title44'},//标题5
 	{path:url+'img/shareTitle01.png',type:'img',name:'shareTitle01'},//分享标题
 	{path:url+'img/share.png',type:'img',name:'share'},//箭头
 	{path:url+'img/shareTitle02.png',type:'img',name:'shareTitle02'},//分享标题
@@ -78,9 +84,11 @@ var gameImg = [
 	{path:url+'img/return.png',type:'img',name:'return'},//返回
 	{path:url+'img/flower.png',type:'img',name:'flower'},//花
 	{path:url+'img/show.png',type:'img',name:'show'},//
+	{path:url+'img/jf.png',type:'img',name:'jf'},//
+	
 ];
 //全局变量
-var backLayer,musicLayer,loadLayer,imgList,home,gongLayer;
+var backLayer,musicLayer,textLayer,loadLayer,imgList,home,gongLayer;
 //egges
 function egges(x,y,name,arr,n){
 	base(this,LSprite,[]);

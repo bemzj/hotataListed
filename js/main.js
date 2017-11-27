@@ -14,14 +14,56 @@ function main(){
 function loadImging(result){
 	LLoadManage.load(gameImg,loadProgress,startGame);
 	musicLayer.addChild(new musicBtn(20,20,0.8,0.8,result['music'],'bg'));
+	//添加背景
+	var back = getBitmap(result['loadBkg']);
+	backLayer.addChild(back);
+	//金
+	var jin = getBitmap(result['jin']);
+	jin.y = -140;
+	jin.x = rCenterWidth(jin);
+	backLayer.addChild(jin);
+	bling(jin,0.5,0.75,0.25,true);
+	//太阳
+	var sun = getBitmap(result['sun']);
+	sun.y = rCenterHeight(sun);
+	sun.x = rCenterWidth(sun);
+	backLayer.addChild(sun);
+	bling(sun,0.6,1,0.5,true);
+	//logo
+	var logo = getBitmap(result['logo']);
+	logo.y = 434;
+	logo.x = rCenterWidth(logo);
+	backLayer.addChild(logo);
+	bigAndSmall(logo,2,2,1,0.05,0,true);
+	//
+	var bLayer = new LSprite();
+	bLayer.graphics.drawRoundRect(0, "#000000", [168, 600, 416, 20, 10], true, "#440204");
+	backLayer.addChild(bLayer);
+	//加载层
+	loadLayer = new LSprite();
+	loadLayer.graphics.drawRoundRect(0, "#000000", [168, 600, 0, 20, 10], true, "#faf2c1");
+	backLayer.addChild(loadLayer);
+	//数字
+	textLayer = new setText(0,0,30,"0%",'#f0c496');
+	textLayer.x = rCenterWidth(textLayer);
+	textLayer.y = 660;
+	backLayer.addChild(textLayer);
+	
 }
 //加载函数
 function loadProgress(pre){
+	var num = parseInt(pre);	
+	textLayer.childList["0"].text = num+"%";
+	textLayer.x = rCenterWidth(textLayer);
+	loadLayer.graphics.clear();
+	loadLayer.graphics.drawRoundRect(0, "#000000", [168, 600, 416*pre/100, 20, 10], true, "#faf2c1");
 }
 //游戏开始
 function startGame(result){
 	imgList=result;
-	index();
+	setTimeout(function(){
+		videoShow();
+	},500);
 }
 //视频播放
 function videoShow(){
@@ -87,7 +129,9 @@ function videoShow(){
 			};
 		});
 	}
-		
+	setTimeout(function(){
+		backLayer.removeAllChild();
+	},500);
 }
 //首页
 function homePage(){
@@ -97,24 +141,36 @@ function homePage(){
 	//添加背景
 	var back = getBitmap(imgList['indexBack']);
 	home.addChild(back);
+	//主题1
+	var jf = getBitmap(imgList['jf']);
+	home.addChild(jf);
+	jf.x=rCenterWidth(jf);
+	jf.y=-150;
+	bling(jf,1.0,0.2,1.0,true);
 	//logo
 	var logo = getBitmap(imgList['logo']);
 	home.addChild(logo);
 	logo.x=rCenterWidth(logo);
 	logo.y=47;
 	logo.alpha=0;
-	//主题
-	var Title = getBitmap(imgList['Title']);
-	home.addChild(Title);
-	Title.x=rCenterWidth(Title);
-	Title.y=165;
-	Title.alpha=0;
+	var Title44= getBitmap(imgList['Title44']);
+	home.addChild(Title44);
+	Title44.x = rCenterWidth(Title44);
+	Title44.y = 165;
+	Title44.alpha = 0;
+	var Title4= getBitmap(imgList['Title4']);
+	home.addChild(Title4);
+	Title4.x = rCenterWidth(Title4);
+	Title4.y = 165;
+	Title4.visible = false;
+	bling(Title4,0.7,0.2,1.0,true);
 	//主题1
 	var Title1 = getBitmap(imgList['Title1']);
 	home.addChild(Title1);
 	Title1.x=rCenterWidth(Title1);
 	Title1.y=540;
 	Title1.alpha=0;
+	bigAndSmall(Title1,2,2,1.4,0.02,0,true);
 	//主题2
 	var Title2 = getBitmap(imgList['Title2']);
 	home.addChild(Title2);
@@ -149,9 +205,19 @@ function homePage(){
 	hit.x=350;
 	hit.y=970;
 	hit.alpha=0;
-	bigAndSmall(Title,2,2,1.0,0.02,0,true);
+	
+//	主题
+//	var Title = getBitmap(imgList['Title']);
+//	home.addChild(Title);
+//	Title.x=rCenterWidth(Title);
+//	Title.y=165;
+//	Title.alpha=0;
+//	bigAndSmall(Title,2,2,1.0,0.02,0,true);
 	//逐层显示
-	LTweenLite.to(logo,0.5,{alpha:1.0}).to(Title,0.6,{alpha:1.0}).to(Title1,0.6,{alpha:1.0}).to(Title2,0.6,{alpha:1.0,onComplete:function(){
+	LTweenLite.to(logo,0.5,{alpha:1.0}).to(Title44,0.6,{alpha:1.0,onComplete:function(){
+		Title4.visible = true;
+		
+	}}).to(Title1,0.6,{alpha:1.0}).to(Title2,0.6,{alpha:1.0,onComplete:function(){
 		LTweenLite.to(flower,0.6,{alpha:1.0});
 		LTweenLite.to(gongBottom,0.6,{alpha:1.0}).to(hit,0.6,{alpha:1.0,onComplete:function(){
 			LTweenLite.to(hit,1.0,{y:950,x:345,scaleX:1.1,sacleY:1.1,rotate:20,loop:true}).to(hit,1.0,{y:970,x:350,rotate:0,scaleX:1.0,sacleY:1.0});
@@ -599,6 +665,30 @@ function index(){
 	}});
 	var back= getBitmap(imgList['index']);
 	indexLayer.addChild(back);
+	//主题1
+	var jf = getBitmap(imgList['jf']);
+	indexLayer.addChild(jf);
+	jf.x=rCenterWidth(jf);
+	jf.y=-150;
+	bling(jf,1.0,0.2,1.0,true);
+	var Title44= getBitmap(imgList['Title44']);
+	indexLayer.addChild(Title44);
+	Title44.x = rCenterWidth(Title44);
+	Title44.y = 94;
+	
+	var Title4= getBitmap(imgList['Title4']);
+	indexLayer.addChild(Title4)-1;
+	Title4.x = rCenterWidth(Title4)-1;
+	Title4.y = 94;
+	bling(Title4,0.7,0.2,1.0,true);
+	
+	
+	//主题1
+	var Title1 = getBitmap(imgList['Title1']);
+	indexLayer.addChild(Title1);
+	Title1.x=rCenterWidth(Title1);
+	Title1.y=450;
+	bigAndSmall(Title1,2,2,1.4,0.02,0,true);
 	//领取红利
 	var getRed = getButton(imgList['getRed']);
 	indexLayer.addChild(getRed);
@@ -682,15 +772,15 @@ function giftsCenter(){
 	scroll.x = 55;
 	scroll.y = 200;
 	/*
-	 * 好太太100元代金券     编号为0
-	 * 1288元购晾衣架GW-1561 编号为1
-	 * 智能垃圾桶 GL-H001D 编号为2
-	 * 炫彩简约衣架㆒琥珀金（16个） 编号为3
-	 * 好太太抱枕  编号为4
-	 * 好太太安迪人偶  编号为5
-	 * 好太太智能晾衣机GW-1653 编号为6
+	 * 100元代金券          编号为g1
+	 * 好太太安迪人偶       编号为g2
+	 * 好太太抱枕               编号为g3
+	 * 铝合金衣架礼盒       编号为g4
+	 * 价值118元好太太智能垃圾桶  编号为g5
+	 * 好太太智能晾衣架GW-5823  编号为g6
+	 * 好太太智能晾衣机GW-1583  编号为g7
 	 */
-	var gText = ["好太太100元代金券","1288元购晾衣架GW-1561","智能垃圾桶 GL-H001D","炫彩简约衣架㆒琥珀金（16个）","好太太抱枕","好太太安迪人偶 ","好太太智能晾衣机GW-1653"];
+	var gText = ["100元代金券","好太太安迪人偶","好太太抱枕","铝合金衣架礼盒","价值118元好太太智能垃圾桶","好太太智能晾衣架GW-5823","好太太智能晾衣机GW-1583"];
 	$.get('json/gift.json',function(data){
 		for(var i=0;i<data.all.length;i++)
 		{
