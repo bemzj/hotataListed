@@ -61,10 +61,10 @@ function loadProgress(pre){
 //游戏开始
 function startGame(result){
 	imgList=result;
-//	setTimeout(function(){
-//		videoShow();
-//	},500);
-	hitGong();
+	setTimeout(function(){
+		videoShow();
+	},500);
+//	hitGong();
 }
 //视频播放
 function videoShow(){
