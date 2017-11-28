@@ -21,9 +21,11 @@ var gameImg = [
 	{path:url+'img/shareBack.jpg',type:'img',name:'shareBack'},//首页背景
 	{path:url+'img/logo.png',type:'img',name:'logo'},//logo
 	{path:url+'img/Title.jpg',type:'img',name:'Title'},//首页标题1
+	{path:url+'img/Title0.jpg',type:'img',name:'Title0'},//首页标题1
 	{path:url+'img/Title1.png',type:'img',name:'Title1'},//首页标题2
 	{path:url+'img/Title2.png',type:'img',name:'Title2'},//首页标题3
-	{path:url+'img/Title3.png',type:'img',name:'Title3'},//标题4
+	{path:url+'img/Title3.jpg',type:'img',name:'Title3'},//标题4
+	{path:url+'img/Title33.jpg',type:'img',name:'Title33'},//标题4
 	{path:url+'img/Title4.jpg',type:'img',name:'Title4'},//标题5
 	{path:url+'img/Title44.jpg',type:'img',name:'Title44'},//标题5
 	{path:url+'img/shareTitle01.png',type:'img',name:'shareTitle01'},//分享标题
@@ -62,8 +64,10 @@ var gameImg = [
 	{path:url+'img/confirm.png',type:'img',name:'confirm'},//确定
 	{path:url+'img/popWindow.png',type:'img',name:'popWindow'},//弹窗
 	{path:url+'img/center.png',type:'img',name:'center'},//中心
+	{path:url+'img/centers.jpg',type:'img',name:'centers'},//中心
 	{path:url+'img/activity.png',type:'img',name:'activity'},//活动
 	{path:url+'img/index.jpg',type:'img',name:'index'},//主页
+	{path:url+'img/indexText.png',type:'img',name:'indexText'},//主页文字
 	{path:url+'img/getRed.png',type:'img',name:'getRed'},//领取红利
 	{path:url+'img/getGift.png',type:'img',name:'getGift'},//领取礼物
 	{path:url+'img/activityBkg.jpg',type:'img',name:'activityBkg'},//活动说明
@@ -85,7 +89,10 @@ var gameImg = [
 	{path:url+'img/flower.png',type:'img',name:'flower'},//花
 	{path:url+'img/show.png',type:'img',name:'show'},//
 	{path:url+'img/jf.png',type:'img',name:'jf'},//
-	
+	{path:url+'img/lightLine.png',type:'img',name:'lightLine'},//
+	{path:url+'img/use.png',type:'img',name:'use'},//
+	{path:url+'img/useText.png',type:'img',name:'useText'},//
+	{path:url+'img/slight.png',type:'img',name:'slight'},//
 ];
 //全局变量
 var backLayer,musicLayer,textLayer,loadLayer,imgList,home,gongLayer;
@@ -187,4 +194,22 @@ function giftes(id,x,y,h,tN,mText,sText){
 		self.sText = new setText(25,69,22,sText,"#b53833",true);
 		self.addChild(self.sText);
 	}
+}
+//星星
+function star(x,y,sx,sy){
+	base(this,LSprite,[]);
+	var self = this;
+	self.bitmap = getBitmap(imgList['slight']);
+	self.addChild(self.bitmap);
+	self.bitmap.scaleX = sx;
+	self.bitmap.scaleY = sy;
+	self.x = x;
+	self.y = y;
+	self.sound = new LSound();
+	self.addChild(self.sound);
+	self.sound.load('music/b.mp3');
+}
+star.prototype.blind=function(){
+	var self = this;
+	self.tween = bling(self,0.5,0.5,1.0,true);
 }

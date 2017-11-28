@@ -19,18 +19,18 @@
 	width: 100%;
 }
 #award ul li:nth-child(1) p{
-	font-size: 0.6rem;
+	font-size: 0.45rem;
 	color: #fcda91;
 	text-align: center;
-	line-height: 1.0rem;
+	line-height: 0.8rem;
 }
 #award ul li:nth-child(2) p{
-	font-size: 0.4rem;
+	font-size: 0.36rem;
 	color: #fcda91;
 	text-align: center;
 }
 #award ul li:nth-child(3){
-	height: 4.0rem;
+	height: 3.8rem;
 } 
 #award ul li:nth-child(3) img{
 	height: 100%;
@@ -173,18 +173,27 @@
 	font-size: 0.24rem;
 }
 #award ul li:nth-child(7){
+	width: 90%;
+	margin: 0 auto;
+}
+#award ul li:nth-child(7) p{
+	font-size: 0.24rem;
+	color: #fcda91;
+	line-height: 0.6rem;
+}
+#award ul li:nth-child(8){
 	width: 100%;
 }
-#award ul li:nth-child(7) a{
+#award ul li:nth-child(8) a{
 	display: block;
 	float: left;
 	width: 35%;
-	margin: 0.6rem 5% 0rem 10%;
+	margin: 0.2rem 5% 0rem 10%;
 }
-#award ul li:nth-child(7) a:nth-child(2){
-	margin: 0.6rem 10% 0rem 5%;
+#award ul li:nth-child(8) a:nth-child(2){
+	margin: 0.2rem 10% 0rem 5%;
 }
-#award ul li:nth-child(7) a img{
+#award ul li:nth-child(8) a img{
 	width: 100%;
 }
 #popWin{

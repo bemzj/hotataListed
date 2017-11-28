@@ -13,7 +13,7 @@ function main(){
 //预加载页面
 function loadImging(result){
 	LLoadManage.load(gameImg,loadProgress,startGame);
-	musicLayer.addChild(new musicBtn(20,20,0.8,0.8,result['music'],'bg'));
+	musicLayer.addChild(new musicBtn(15,15,0.8,0.8,result['music'],'bg'));
 	//添加背景
 	var back = getBitmap(result['loadBkg']);
 	backLayer.addChild(back);
@@ -64,6 +64,7 @@ function startGame(result){
 	setTimeout(function(){
 		videoShow();
 	},500);
+//	hitGong();
 }
 //视频播放
 function videoShow(){
@@ -139,38 +140,38 @@ function homePage(){
 	home = new LSprite();
 	backLayer.addChild(home);
 	//添加背景
-	var back = getBitmap(imgList['indexBack']);
+	var back = getBitmap(imgList['back']);
 	home.addChild(back);
-	//主题1
-	var jf = getBitmap(imgList['jf']);
-	home.addChild(jf);
-	jf.x=rCenterWidth(jf);
-	jf.y=-150;
-	bling(jf,1.0,0.2,1.0,true);
+	
+	var Title44= getBitmap(imgList['Title']);
+	home.addChild(Title44);
+	Title44.x = rCenterWidth(Title44);
+	Title44.y = 0;
+	Title44.alpha = 0;
+	var Title4= getBitmap(imgList['Title0']);
+	home.addChild(Title4);
+	Title4.x = rCenterWidth(Title4);
+	Title4.y = 0;
+	Title4.visible = false;
+	bling(Title4,0.7,0.5,1.0,true);
 	//logo
 	var logo = getBitmap(imgList['logo']);
 	home.addChild(logo);
 	logo.x=rCenterWidth(logo);
 	logo.y=47;
 	logo.alpha=0;
-	var Title44= getBitmap(imgList['Title44']);
-	home.addChild(Title44);
-	Title44.x = rCenterWidth(Title44);
-	Title44.y = 165;
-	Title44.alpha = 0;
-	var Title4= getBitmap(imgList['Title4']);
-	home.addChild(Title4);
-	Title4.x = rCenterWidth(Title4);
-	Title4.y = 165;
-	Title4.visible = false;
-	bling(Title4,0.7,0.2,1.0,true);
+	//centers
+	var centers = getBitmap(imgList['centers']);
+	home.addChild(centers);
+	centers.y=581;
+	centers.alpha=0;
 	//主题1
 	var Title1 = getBitmap(imgList['Title1']);
 	home.addChild(Title1);
 	Title1.x=rCenterWidth(Title1);
 	Title1.y=540;
 	Title1.alpha=0;
-	bigAndSmall(Title1,2,2,1.4,0.02,0,true);
+//	bigAndSmall(Title1,2,2,1.4,0.02,0,true);
 	//主题2
 	var Title2 = getBitmap(imgList['Title2']);
 	home.addChild(Title2);
@@ -196,9 +197,10 @@ function homePage(){
 	flower.x=rCenterWidth(flower);
 	flower.y=720;
 	flower.alpha=0;
-	LTweenLite.to(flower,6,{rotate:360,loop:true,onComplete:function(){
-		flower.rotate = 0;
-	}})
+//	LTweenLite.to(flower,6,{rotate:360,loop:true,onComplete:function(){
+//		flower.rotate = 0;
+//	}});
+	bigAndSmall(flower,2,1.8,2.0,0.08,0,true);
 	//hit
 	var hit = getBitmap(imgList['hit']);
 	home.addChild(hit);
@@ -217,7 +219,7 @@ function homePage(){
 	LTweenLite.to(logo,0.5,{alpha:1.0}).to(Title44,0.6,{alpha:1.0,onComplete:function(){
 		Title4.visible = true;
 		
-	}}).to(Title1,0.6,{alpha:1.0}).to(Title2,0.6,{alpha:1.0,onComplete:function(){
+	}}).to(Title1,0.6,{alpha:1.0}).to(centers,0.6,{alpha:1.0}).to(Title2,0.6,{alpha:1.0,onComplete:function(){
 		LTweenLite.to(flower,0.6,{alpha:1.0});
 		LTweenLite.to(gongBottom,0.6,{alpha:1.0}).to(hit,0.6,{alpha:1.0,onComplete:function(){
 			LTweenLite.to(hit,1.0,{y:950,x:345,scaleX:1.1,sacleY:1.1,rotate:20,loop:true}).to(hit,1.0,{y:970,x:350,rotate:0,scaleX:1.0,sacleY:1.0});
@@ -246,6 +248,12 @@ function hitGong(){
 	}});
 	var back = getBitmap(imgList['gongBack']);
 	gongLayer.addChild(back);
+	var Title = getBitmap(imgList['Title3']);
+	gongLayer.addChild(Title);
+	var Title3 = getBitmap(imgList['Title33']);
+	gongLayer.addChild(Title3);
+	bling(Title3,0.7,0.5,1.0,true);
+	
 	//锣的背部
 	var gongBottom = getBitmap(imgList['gongBottom1']);
 	gongLayer.addChild(gongBottom);
@@ -255,18 +263,15 @@ function hitGong(){
 	//花
 	var flower = getBitmap(imgList['flower']);
 	gongLayer.addChild(flower);
-	flower.scaleX = 1.4;
-	flower.scaleY = 1.4;
-	flower.x=rCenterWidth(flower);
-	flower.y=320;
+	flower.scaleX = 1.3;
+	flower.scaleY = 1.3;
+	flower.x=rCenterWidth(flower)+10;
+	flower.y=360;
 	LTweenLite.to(flower,6,{rotate:360,loop:true,onComplete:function(){
 		flower.rotate = 0;
 	}});
-	var Title = getBitmap(imgList['Title3']);
-	gongLayer.addChild(Title);
-	Title.x=rCenterWidth(Title);
-	Title.y=90;
-	bigAndSmall(Title,2,2,1.5,0.01,0,true);
+//	bigAndSmall(flower,2,2,2.0,0.08,0,true);
+	
 	//大锣
 	var gongBig = getBitmap(imgList['gongBig']);
 	gongLayer.addChild(gongBig);
@@ -284,21 +289,62 @@ function hitGong(){
 	lmap.x=29;
 	lmap.y=900;
 	lmap.alpha=0;
+	//光
+	var lList = [];
+	var lLx = [540,275,118,180,380,375,395,454,625,630];
+	var lLy = [998,885,962,1060,920,1040,1095,915,915,1110];
+	for(var i=0;i<lLx.length;i++)
+	{
+		if(i==0)
+		{
+			lList.push(new star(lLx[i],lLy[i],2.0,2.0));			
+		}else{
+			lList.push(new star(lLx[i],lLy[i],1.5,1.5));
+		}
+		gongLayer.addChild(lList[i]);
+		lList[i].alpha = 0;
+	}
 	
-	//亮光
-	var light = getBitmap(imgList['light']);
-	gongLayer.addChild(light);
-	light.x=100;
-	light.y=895;
-	light.alpha = 0;
-//	bling(light,1.0,0.4,1.0,true);
-	//线
+//	var shape = new LShape();
+//	gongLayer.addChild(shape);
+//	
+//	var lLxr= [560,290,130,192,392,387,407,470,638,630];
+//	var lLyr = [1028,908,985,1085,942,1065,1120,940,940,1110];
+//	shape.graphics.drawLine(2,"#ffffff", [560, 1028, 638, 940]);
+	//数学计算
+//	function ry(x1,y1,x2,y2,x)
+//	{
+//		var k = (y2-y1)/(x2-x1);
+//		var b = y1-k*x1;
+//		var y = k*x+b;
+//		return y;
+//	}
+//	
+	
+//
+//	var shape = new LShape();
+//	addChild(shape);
+//	var lx = lLx[0];
+//	var ly = lLy[0];
+//	var lx1;
+//	var ly1;
+//
+//	var lz = setInterval(function(){
+//		lx1=lx-1;
+//		ly1 = ry(lLx[0],lLy[0],lLx[1],lLx[1],lx);
+//		shape.graphics.drawLine(5,"#ffffff", [lx, ly, lx1, ly1]);
+//		if(lLx[1]>lx)
+//		{
+//			clearInterval(lz);
+//		}
+//		lx = lx1;
+//		ly = ly1;
+//	},20);
 	var line = getBitmap(imgList['line']);
 	gongLayer.addChild(line);
 	line.x=112;
 	line.y=875;
 	line.alpha=0
-	
 	var hitLayer = new LSprite();
 	gongLayer.addChild(hitLayer);
 	hitLayer.graphics.drawRect(0,"#ed2456",[190,525,370,370],true,'rgba(0,0,0,0)');
@@ -316,16 +362,30 @@ function hitGong(){
 				}
 			}});
 			document.getElementById('gong').play();
-			LTweenLite.to(lmap,1.5,{alpha:1}).to(light,0.5,{alpha:1}).to(line,1.5,{alpha:1,onComplete:function(){
-				document.getElementById('hj').pause();
-				setTimeout(index,1000);
-				
-			},onStart:function(){
-				setTimeout(function(){
-					document.getElementById('gong').pause();
-					document.getElementById('hj').play();
+			LTweenLite.to(lmap,1.5,{alpha:1,onComplete:function(){
+				var time = 0;
+				var str = setInterval(function(){
+					
+					lList[time].alpha = 1;
+					lList[time].blind();
+					lList[time].childList[1].play();
+					time++;
+					if(time==10)
+					{
+						clearInterval(str);
+						LTweenLite.to(line,1.5,{alpha:1,onComplete:function(){
+							document.getElementById('hj').pause();
+							setTimeout(index,2000);
+							
+						},onStart:function(){
+							setTimeout(function(){
+								document.getElementById('gong').pause();
+								document.getElementById('hj').play();
+							},500);
+						}});
+					}
 				},500);
-			}});
+			}})
 		}});
 	});
 	/*
@@ -392,12 +452,26 @@ function award(text,name){
 	//$.get
 	var awardLayer = new LSprite();
 	backLayer.addChild(awardLayer);
+	//
+	var fanLayer = new LSprite();
+	fanLayer.graphics.drawRect(0,"#ffffff",[0,0,LGlobal.width,LGlobal.height],false,"#ffffff");
+	fanLayer.addEventListener(LMouseEvent.MOUSE_DOWN,setNull);
+	awardLayer.addChild(fanLayer);
+	//
 	var back = getBitmap(imgList['awardBkg']);
 	awardLayer.addChild(back);
 	var txt = new setText(0,0,42,text,'#fcda91');
 	txt.x = rCenterWidth(txt);
 	txt.y = 188;
 	awardLayer.addChild(txt);
+	if(name=="gift")
+	{
+		var useText = getButton(imgList['useText']);
+		useText.y = rCenterHeight(useText);
+		useText.x = LGlobal.width-useText.getWidth();
+		awardLayer.addChild(useText);
+		useText.addEventListener(LMouseEvent.MOUSE_DOWN,use);
+	}
 	//分享按钮
 	var shareRed = getButton(imgList['shareRed']);
 	awardLayer.addChild(shareRed);
@@ -431,6 +505,12 @@ function awardGame(){
 	backLayer.die();
 	var tLayer = new LSprite();
 	backLayer.addChild(tLayer);
+	//
+	var fanLayer = new LSprite();
+	fanLayer.graphics.drawRect(0,"#ffffff",[0,0,LGlobal.width,LGlobal.height],false,"#ffffff");
+	fanLayer.addEventListener(LMouseEvent.MOUSE_DOWN,setNull);
+	tLayer.addChild(fanLayer);
+
 	//1288
 	var getBkg = getBitmap(imgList['getBkg']);
 	tLayer.addChild(getBkg);
@@ -574,7 +654,14 @@ function taiger(){
 	backLayer.die();
 	var tLayer = new LSprite();
 	backLayer.addChild(tLayer);
+	
 	tLayer.graphics.drawRect(0,"#ed2456",[0,0,750,1206],true,'#242629');
+	//
+	var fanLayer = new LSprite();
+	fanLayer.graphics.drawRect(0,"#ffffff",[0,0,LGlobal.width,LGlobal.height],false,"#ffffff");
+	fanLayer.addEventListener(LMouseEvent.MOUSE_DOWN,setNull);
+	tLayer.addChild(fanLayer);
+	//
 	//1288
 	var awardGift1 = getBitmap(imgList['awardGift']);
 	tLayer.addChild(awardGift1);
@@ -663,36 +750,45 @@ function index(){
 			gongLayer.remove();
 		}
 	}});
+	//
+	var fanLayer = new LSprite();
+	fanLayer.graphics.drawRect(0,"#ffffff",[0,0,LGlobal.width,LGlobal.height],false,"#ffffff");
+	fanLayer.addEventListener(LMouseEvent.MOUSE_DOWN,setNull);
+	indexLayer.addChild(fanLayer);
+	//
 	var back= getBitmap(imgList['index']);
 	indexLayer.addChild(back);
-	//主题1
-	var jf = getBitmap(imgList['jf']);
-	indexLayer.addChild(jf);
-	jf.x=rCenterWidth(jf);
-	jf.y=-150;
-	bling(jf,1.0,0.2,1.0,true);
-	var Title44= getBitmap(imgList['Title44']);
-	indexLayer.addChild(Title44);
-	Title44.x = rCenterWidth(Title44);
-	Title44.y = 94;
+	//文字
+	var gCode = new setText(82,20,36,"股票代码：603848",'#e8d09c');
+	indexLayer.addChild(gCode);
 	
-	var Title4= getBitmap(imgList['Title4']);
-	indexLayer.addChild(Title4)-1;
-	Title4.x = rCenterWidth(Title4)-1;
-	Title4.y = 94;
-	bling(Title4,0.7,0.2,1.0,true);
-	
-	
-	//主题1
-	var Title1 = getBitmap(imgList['Title1']);
-	indexLayer.addChild(Title1);
-	Title1.x=rCenterWidth(Title1);
-	Title1.y=450;
-	bigAndSmall(Title1,2,2,1.4,0.02,0,true);
+	//
+	var indexText = getBitmap(imgList['indexText']);
+	indexLayer.addChild(indexText);
+	indexText.x = rCenterWidth(indexText);
+	indexText.y = 126;
+	bigAndSmall(indexText,2,2,1.0,0.008,0,true);
+	//
+	var lightLine = getBitmap(imgList['lightLine']);
+	indexLayer.addChild(lightLine);
+	lightLine.x = -lightLine.getWidth();
+	lightLine.y = 155;
+	var llx = lightLine.x;
+	LTweenLite.to(lightLine,2.0,{x:750,loop:true,onComplete:function(){
+		lightLine.x = llx;
+	}});
+	var lightLine1 = getBitmap(imgList['lightLine']);
+	indexLayer.addChild(lightLine1);
+	lightLine1.rotate=180;
+	lightLine1.x = 750;
+	lightLine1.y = 155;	
+	LTweenLite.to(lightLine1,2.0,{x:llx,loop:true,onComplete:function(){
+		lightLine1.x = 750;
+	}});
 	//领取红利
 	var getRed = getButton(imgList['getRed']);
 	indexLayer.addChild(getRed);
-	getRed.y = 1070;
+	getRed.y = 1050;
 	getRed.x = 50;
 	bigAndSmall(getRed,2,2,1.0,0.02,0,true);
 	getRed.addEventListener(LMouseEvent.MOUSE_DOWN,function(){
@@ -703,7 +799,7 @@ function index(){
 	//领取礼品
 	var getGift = getButton(imgList['getGift']);
 	indexLayer.addChild(getGift);
-	getGift.y = 1070;
+	getGift.y = 1050;
 	getGift.x = 382;
 	bigAndSmall(getGift,2,2,1.0,0.02,0,true);
 	getGift.addEventListener(LMouseEvent.MOUSE_DOWN,function(){
@@ -780,7 +876,7 @@ function giftsCenter(){
 	 * 好太太智能晾衣架GW-5823  编号为g6
 	 * 好太太智能晾衣机GW-1583  编号为g7
 	 */
-	var gText = ["100元代金券","好太太安迪人偶","好太太抱枕","铝合金衣架礼盒","价值118元好太太智能垃圾桶","好太太智能晾衣架GW-5823","好太太智能晾衣机GW-1583"];
+	var gText = ["100元代金券","好太太安迪人偶","好太太抱枕","好太太铝合金衣架礼盒","好太太智能垃圾桶","好太太落地晾衣架GW-5823","好太太智能晾衣机GW-1583"];
 	$.get('json/gift.json',function(data){
 		for(var i=0;i<data.all.length;i++)
 		{
@@ -866,5 +962,22 @@ function popWin(text1,text2){
 	
 	confirm.addEventListener(LMouseEvent.MOUSE_DOWN,function(){
 		popLayer.remove();
+	});
+}
+//使用说明
+function use(){
+	var uLayer = new LSprite();
+	backLayer.addChild(uLayer);
+	uLayer.graphics.drawRect(0,"#000000",[0,0,LGlobal.width,LGlobal.height],true,"rgba(0,0,0,0.75)");
+	uLayer.addEventListener(LMouseEvent.MOUSE_DOWN,setNull);
+	var use= getBitmap(imgList['use']);
+	use.x = rCenterWidth(use);
+	use.y = rCenterHeight(use);
+	uLayer.addChild(use);
+	var confirm= new LSprite();
+	uLayer.addChild(confirm);
+	confirm.graphics.drawRect(0,"#000000",[240,775,270,75],false,"rgba(0,0,0,0)");
+	confirm.addEventListener(LMouseEvent.MOUSE_DOWN,function(){
+		uLayer.remove();
 	});
 }
