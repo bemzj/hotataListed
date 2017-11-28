@@ -61,10 +61,10 @@ function loadProgress(pre){
 //游戏开始
 function startGame(result){
 	imgList=result;
-	setTimeout(function(){
-		videoShow();
-	},500);
-	
+//	setTimeout(function(){
+//		videoShow();
+//	},500);
+	hitGong();
 }
 //视频播放
 function videoShow(){
@@ -288,71 +288,102 @@ function hitGong(){
 	gongLayer.addChild(lmap);
 	lmap.x=29;
 	lmap.y=900;
-	lmap.alpha=1;
+	lmap.alpha=0;
+	var shape = [];
+	for(var i=0;i<10;i++)
+	{
+		shape[i] = new LShape();
+		gongLayer.addChild(shape[i]);
+	}
 	//光
 	var lList = [];
-	var lLx = [540,275,118,180,380,375,395,454,625,630];
-	var lLy = [998,885,962,1060,920,1040,1095,915,915,1110];
+	var lLx = [525,275,118,180,380,375,395,454,625,630];
+	var lLy = [980,885,962,1060,920,1040,1095,915,915,1110];
 	for(var i=0;i<lLx.length;i++)
 	{
 		if(i==0)
 		{
-			lList.push(new star(lLx[i],lLy[i],2.0,2.0));			
+			lList.push(new star(lLx[i],lLy[i],3.0,3.0));
+			lList[0].blind();
 		}else{
 			lList.push(new star(lLx[i],lLy[i],1.5,1.5));
+			lList[i].alpha = 0;
 		}
 		gongLayer.addChild(lList[i]);
-		lList[i].alpha = 0;
+		
 	}
 	
-//	var shape = [];
-//	for(var i=1;i<10;i++)
-//	{
-//		shape[i] = new LShape();
-//		gongLayer.addChild(shape[i]);
-//	}
-//	var lLxr= [560,290,130,192,392,387,407,470,638,638];
-//	var lLyr = [1028,908,985,1085,942,1065,1120,940,940,1110];
-//	//数学计算
-////	function ry(x1,y1,x2,y2,x)
-////	{
-////		var k = (y2-y1)/(x2-x1);
-////		var b = y1-k*x1;
-////		var y = k*x+b;
-////		return y;
-////	}
-//	var lz = [];
-//	var lx = [];
-//	var ly = [];
-//	var lx1 = [];
-//	var ly1 = []
-//	for(var i=1;i<10;i++)
-//	{
-//		lx[i] = lLxr[0];
-//		ly[i] = lLyr[0];
-//		lx1[i];
-//		ly1[i];	
-//		lz[i] = setInterval(function(){
-//			lx1[i]=lx[i]-1;
-//			ly1[i] = ry(lLxr[0],lLyr[0],lLxr[i],lLyr[i],lx[i]);
-//			shape[i].graphics.drawLine(3,"#ffffff", lx[i], ly[i], lx1[i], ly1[i]);
-//			if(lLxr[i]>lx[i])
-//			{
-//				clearInterval(lz[i]);
-//			}
-//			lx[i] = lx1[i];
-//			ly[i] = ly1[i];
-//		},2);
-//	}
-//	
 	
-	
-	
-	var line = getBitmap(imgList['line']);
-	gongLayer.addChild(line);
-	line.x=112;
-	line.y=875;
-	line.alpha=0;
+	var lLxr= [560,290,130,197,400,387,415,475,638,642];
+	var lLyr = [1028,908,985,1085,942,1065,1120,940,940,1135];
+	//数学计算
+	function ry(x1,y1,x2,y2,x)
+	{
+		var k = (y2-y1)/(x2-x1);
+		var b = y1-k*x1;
+		var y = k*x+b;
+		return y;
+	}
+	var lz = [];
+	var lx = [];
+	var ly = [];
+	var lx1 = [];
+	var ly1 = [];
+	function lines(i,time){
+		lx[i] = lLxr[0];
+		ly[i] = lLyr[0];
+		lx1[i];
+		ly1[i];	
+		lz[i] = setInterval(function(){
+			if(lLxr[0]<lLxr[i])
+			{
+				lx1[i]=lx[i]+6;
+			}else{
+				lx1[i]=lx[i]-6;
+			}
+			
+			ly1[i] = ry(lLxr[0],lLyr[0],lLxr[i],lLyr[i],lx[i]);
+			shape[i].graphics.drawLine(2,"rgba(232,208,156,0.75)", [lx[i], ly[i], lx1[i], ly1[i]]);
+			if(lLxr[0]<lLxr[i])
+			{
+				if(lLxr[i]-6<lx[i])
+				{
+					clearInterval(lz[i]);
+				}
+			}else{
+				if(lLxr[i]+6>lx[i])
+				{
+					clearInterval(lz[i]);
+				}	
+			}
+			
+			lx[i] = lx1[i];
+			ly[i] = ly1[i];
+		},time);
+	}
+	//金粉
+	var times = 1.5;
+	var lt = getBitmap(imgList['lt']);
+	lt.x = 121;
+	lt.y = 447;
+	gongLayer.addChild(lt);
+	var rt = getBitmap(imgList['rt']);
+	rt.x = 380;
+	rt.y = 447;
+	gongLayer.addChild(rt);
+	var lb = getBitmap(imgList['lb']);
+	lb.x = 121;
+	lb.y = 650;
+	gongLayer.addChild(lb);
+	var rb = getBitmap(imgList['rb']);
+	rb.x = 380;
+	rb.y = 650;
+	gongLayer.addChild(rb);	
+//	var line = getBitmap(imgList['line']);
+//	gongLayer.addChild(line);
+//	line.x=112;
+//	line.y=875;
+//	line.alpha=0;
 	var hitLayer = new LSprite();
 	gongLayer.addChild(hitLayer);
 	hitLayer.graphics.drawRect(0,"#ed2456",[190,525,370,370],true,'rgba(0,0,0,0)');
@@ -369,26 +400,43 @@ function hitGong(){
 					LTweenLite.to(gongBig,0.05,{x:gongx});
 				}
 			}});
+			LTweenLite.to(lt,0.2,{x:50,y:326,alpha:0});
+			LTweenLite.to(rt,0.2,{x:550,y:326,alpha:0});
+			LTweenLite.to(lb,0.2,{x:50,y:771,alpha:0});
+			LTweenLite.to(rb,0.2,{x:550,y:771,alpha:0});
 			document.getElementById('gong').play();
 			LTweenLite.to(lmap,1.5,{alpha:1,onComplete:function(){
-				var time = 0;
+				var time = 1;
 				var str = setInterval(function(){
-					
 					lList[time].alpha = 1;
 					lList[time].blind();
 					lList[time].childList[1].play();
-					time++;
-					if(time==10)
+					if(time!=9)
+					{
+						lList[time+1].alpha = 1;
+						lList[time+1].blind();
+					}
+					time+=2;
+					if(time==11)
 					{
 						clearInterval(str);
-						LTweenLite.to(line,1.5,{alpha:1,onComplete:function(){
+						LTweenLite.to(gongLayer,1.5,{onComplete:function(){
 							document.getElementById('hj').pause();
-							setTimeout(index,2000);
+							setTimeout(index,1000);
 							
 						},onStart:function(){
 							setTimeout(function(){
 								document.getElementById('gong').pause();
 								document.getElementById('hj').play();
+								lines(1,1);
+								lines(2,1);
+								lines(3,1);
+								lines(4,5);
+								lines(5,5);
+								lines(6,5);
+								lines(7,5);
+								lines(8,5);
+								lines(9,5);
 							},500);
 						}});
 					}

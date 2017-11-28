@@ -93,6 +93,10 @@ var gameImg = [
 	{path:url+'img/use.png',type:'img',name:'use'},//
 	{path:url+'img/useText.png',type:'img',name:'useText'},//
 	{path:url+'img/slight.png',type:'img',name:'slight'},//
+	{path:url+'img/lt.png',type:'img',name:'lt'},//
+	{path:url+'img/rt.png',type:'img',name:'rt'},//
+	{path:url+'img/lb.png',type:'img',name:'lb'},//
+	{path:url+'img/rb.png',type:'img',name:'rb'},//
 ];
 //全局变量
 var backLayer,musicLayer,textLayer,loadLayer,imgList,home,gongLayer;
@@ -213,10 +217,31 @@ star.prototype.blind=function(){
 	var self = this;
 	self.tween = bling(self,0.5,0.5,1.0,true);
 }
-	function ry(x1,y1,x2,y2,x)
-	{
-		var k = (y2-y1)/(x2-x1);
-		var b = y1-k*x1;
-		var y = k*x+b;
-		return y;
-	}
+function lines(i, time) {
+	lx[i] = lLxr[0];
+	ly[i] = lLyr[0];
+	lx1[i];
+	ly1[i];
+	lz[i] = setInterval(function() {
+		if(lLxr[0] < lLxr[i]) {
+			lx1[i] = lx[i] + 6;
+		} else {
+			lx1[i] = lx[i] - 6;
+		}
+
+		ly1[i] = ry(lLxr[0], lLyr[0], lLxr[i], lLyr[i], lx[i]);
+		shape[i].graphics.drawLine(3, "#ffffff", [lx[i], ly[i], lx1[i], ly1[i]]);
+		if(lLxr[0] < lLxr[i]) {
+			if(lLxr[i] - 6 < lx[i]) {
+				clearInterval(lz[i]);
+			}
+		} else {
+			if(lLxr[i] + 6 > lx[i]) {
+				clearInterval(lz[i]);
+			}
+		}
+
+		lx[i] = lx1[i];
+		ly[i] = ly1[i];
+	}, time);
+}
