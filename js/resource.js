@@ -213,3 +213,10 @@ star.prototype.blind=function(){
 	var self = this;
 	self.tween = bling(self,0.5,0.5,1.0,true);
 }
+	function ry(x1,y1,x2,y2,x)
+	{
+		var k = (y2-y1)/(x2-x1);
+		var b = y1-k*x1;
+		var y = k*x+b;
+		return y;
+	}

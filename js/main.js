@@ -64,7 +64,7 @@ function startGame(result){
 	setTimeout(function(){
 		videoShow();
 	},500);
-//	hitGong();
+	
 }
 //视频播放
 function videoShow(){
@@ -288,7 +288,7 @@ function hitGong(){
 	gongLayer.addChild(lmap);
 	lmap.x=29;
 	lmap.y=900;
-	lmap.alpha=0;
+	lmap.alpha=1;
 	//光
 	var lList = [];
 	var lLx = [540,275,118,180,380,375,395,454,625,630];
@@ -305,46 +305,54 @@ function hitGong(){
 		lList[i].alpha = 0;
 	}
 	
-//	var shape = new LShape();
-//	gongLayer.addChild(shape);
-//	
-//	var lLxr= [560,290,130,192,392,387,407,470,638,630];
-//	var lLyr = [1028,908,985,1085,942,1065,1120,940,940,1110];
-//	shape.graphics.drawLine(2,"#ffffff", [560, 1028, 638, 940]);
-	//数学计算
-//	function ry(x1,y1,x2,y2,x)
+//	var shape = [];
+//	for(var i=1;i<10;i++)
 //	{
-//		var k = (y2-y1)/(x2-x1);
-//		var b = y1-k*x1;
-//		var y = k*x+b;
-//		return y;
+//		shape[i] = new LShape();
+//		gongLayer.addChild(shape[i]);
+//	}
+//	var lLxr= [560,290,130,192,392,387,407,470,638,638];
+//	var lLyr = [1028,908,985,1085,942,1065,1120,940,940,1110];
+//	//数学计算
+////	function ry(x1,y1,x2,y2,x)
+////	{
+////		var k = (y2-y1)/(x2-x1);
+////		var b = y1-k*x1;
+////		var y = k*x+b;
+////		return y;
+////	}
+//	var lz = [];
+//	var lx = [];
+//	var ly = [];
+//	var lx1 = [];
+//	var ly1 = []
+//	for(var i=1;i<10;i++)
+//	{
+//		lx[i] = lLxr[0];
+//		ly[i] = lLyr[0];
+//		lx1[i];
+//		ly1[i];	
+//		lz[i] = setInterval(function(){
+//			lx1[i]=lx[i]-1;
+//			ly1[i] = ry(lLxr[0],lLyr[0],lLxr[i],lLyr[i],lx[i]);
+//			shape[i].graphics.drawLine(3,"#ffffff", lx[i], ly[i], lx1[i], ly1[i]);
+//			if(lLxr[i]>lx[i])
+//			{
+//				clearInterval(lz[i]);
+//			}
+//			lx[i] = lx1[i];
+//			ly[i] = ly1[i];
+//		},2);
 //	}
 //	
 	
-//
-//	var shape = new LShape();
-//	addChild(shape);
-//	var lx = lLx[0];
-//	var ly = lLy[0];
-//	var lx1;
-//	var ly1;
-//
-//	var lz = setInterval(function(){
-//		lx1=lx-1;
-//		ly1 = ry(lLx[0],lLy[0],lLx[1],lLx[1],lx);
-//		shape.graphics.drawLine(5,"#ffffff", [lx, ly, lx1, ly1]);
-//		if(lLx[1]>lx)
-//		{
-//			clearInterval(lz);
-//		}
-//		lx = lx1;
-//		ly = ly1;
-//	},20);
+	
+	
 	var line = getBitmap(imgList['line']);
 	gongLayer.addChild(line);
 	line.x=112;
 	line.y=875;
-	line.alpha=0
+	line.alpha=0;
 	var hitLayer = new LSprite();
 	gongLayer.addChild(hitLayer);
 	hitLayer.graphics.drawRect(0,"#ed2456",[190,525,370,370],true,'rgba(0,0,0,0)');
@@ -384,7 +392,7 @@ function hitGong(){
 							},500);
 						}});
 					}
-				},500);
+				},250);
 			}})
 		}});
 	});
@@ -475,15 +483,15 @@ function award(text,name){
 	//分享按钮
 	var shareRed = getButton(imgList['shareRed']);
 	awardLayer.addChild(shareRed);
-	shareRed.x=rCenterWidth(shareRed);
-	shareRed.y=1015;
+	shareRed.x=50;
+	shareRed.y=950;
 	bigAndSmall(shareRed,2,2,1.0,0.02,0,true);
 	shareRed.addEventListener(LMouseEvent.MOUSE_DOWN,sharing);
 	//中心
 	var giftCenter = getButton(imgList['giftCenter']);
 	awardLayer.addChild(giftCenter);
-	giftCenter.x = rCenterWidth(shareRed);;
-	giftCenter.y = 910;
+	giftCenter.x = 384;
+	giftCenter.y = 950;
 	bigAndSmall(giftCenter,2,2,1.0,0.02,0,true);
 	giftCenter.addEventListener(LMouseEvent.MOUSE_DOWN,function(){
 		awardLayer.remove();
