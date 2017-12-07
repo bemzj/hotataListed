@@ -216,6 +216,7 @@
 #popWin .popWin{
 	width: 89.6%;
 	position: absolute;
+	margin: 0 auto;
 }
 #popWin .popWin img{
 	width: 100%;
@@ -236,17 +237,17 @@
 	-webkit-flex-direction: column;	
 }
 #popWin .popWin .popIn ul li p{
-	width: 90%;
+	width: 80%;
 	margin: 0 auto;
 	color: #fcda91;
-	font-size: 0.4rem;
-	line-height: 0.6rem;
+	font-size: 0.34rem;
+	line-height: 0.45rem;
 	text-align: center;
 	word-break: break-all;
 	text-overflow: ellipsis;
 	 display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
 	-webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
-	 -webkit-line-clamp: 1; /** 显示的行数 **/
+	 -webkit-line-clamp: 3; /** 显示的行数 **/
 	 overflow: hidden;  /** 隐藏超出的内容 **/
 }
 #popWin .popWin .popIn ul li a{

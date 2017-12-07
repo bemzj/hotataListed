@@ -97,6 +97,15 @@ var gameImg = [
 	{path:url+'img/rt.png',type:'img',name:'rt'},//
 	{path:url+'img/lb.png',type:'img',name:'lb'},//
 	{path:url+'img/rb.png',type:'img',name:'rb'},//
+	{path:url+'img/line01.png',type:'img',name:'line01'},//
+	{path:url+'img/line02.png',type:'img',name:'line02'},//
+	{path:url+'img/line03.png',type:'img',name:'line03'},//
+	{path:url+'img/line04.png',type:'img',name:'line04'},//
+	{path:url+'img/line05.png',type:'img',name:'line05'},//
+	{path:url+'img/line06.png',type:'img',name:'line06'},//
+	{path:url+'img/line07.png',type:'img',name:'line07'},//
+	{path:url+'img/line08.png',type:'img',name:'line08'},//	
+	{path:url+'img/close.png',type:'img',name:'close'},//	
 ];
 //全局变量
 var backLayer,musicLayer,textLayer,loadLayer,imgList,home,gongLayer;
@@ -131,7 +140,7 @@ function num(x,y,text){
 	self.y = y;
 	self.bitmap = getBitmap(imgList['nBkg']);
 	self.addChild(self.bitmap);	
-	self.text = new setText(2,3,42,text,'#f9eec6',true);
+	self.text = new setText(3,1,42,text,'#f9eec6',true);
 	self.addChild(self.text);
 }
 //获取人数
@@ -177,7 +186,10 @@ function giftes(id,x,y,h,tN,mText,sText){
 		switch(self.id){
 			case 0:
 			case 1:
-				popWin("兑换成功，感谢您的参与！");
+//				popWin("兑换成功，感谢您的参与！");
+				//礼品中心进入页面
+				$('iframe').show();
+				$('#hotata').hide();
 				break;
 			default:
 				//礼品中心进入页面

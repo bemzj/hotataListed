@@ -31,7 +31,7 @@ function loadImging(result){
 	bling(sun,0.6,1,0.5,true);
 	//logo
 	var logo = getBitmap(result['logo']);
-	logo.y = 434;
+	logo.y = 515;
 	logo.x = rCenterWidth(logo);
 	backLayer.addChild(logo);
 	bigAndSmall(logo,2,2,1,0.05,0,true);
@@ -64,7 +64,7 @@ function startGame(result){
 	setTimeout(function(){
 		videoShow();
 	},500);
-//	hitGong();
+//	homePage();
 }
 //视频播放
 function videoShow(){
@@ -100,27 +100,29 @@ function videoShow(){
 	}
 	//如果是安卓手机
 	if(browser.versions.android) {
-		$('#videoBack').fadeIn();
-		$('#video').fadeIn();
+		$('#videoShow').fadeIn();
+		$("#videoShow").contents().find('#videoBack').fadeIn();
+		$("#videoShow").contents().find('#video').fadeIn();
 		var vcount = false;
-		$('#videoBack img').css('opacity',0.2);
+		$("#videoShow").contents().find('#videoBack img').css('opacity',0.2);
 		var vb = setInterval(function(){
 			if(vcount==true)
 			{
 				vcount = false;
-				$('#videoBack img').css('opacity',0.1);
+				$("#videoShow").contents().find('#videoBack img').css('opacity',0.1);
 			}else{
 				vcount = true;
-				$('#videoBack img').css('opacity',0.25);
+				$("#videoShow").contents().find('#videoBack img').css('opacity',0.25);
 			}
 		},500);
-		$('#videoBack img').bind('touchstart',function(){
+		$("#videoShow").contents().find('#videoBack img').bind('touchstart',function(){
 			document.getElementById('bg').pause();
-			$('#videoBack').hide();
-			$('#video')[0].play();
+			$("#videoShow").contents().find('#videoBack').hide();
+			$("#videoShow").contents().find('#video')[0].play();
 			$('#hotata').hide();
-			document.getElementById('video').onended=function(){
-				$('#video').fadeOut(100);
+			window.frames["videoshow"].document.getElementById("video").onended=function(){
+				$('#videoShow').fadeOut();
+				$("#videoShow").contents().find('#video').fadeOut(100);
 				document.getElementById('bg').play();
 				$('#hotata').css('z-index',1000);
 				$('#hotata').fadeIn(100,function(){
@@ -158,7 +160,7 @@ function homePage(){
 	var logo = getBitmap(imgList['logo']);
 	home.addChild(logo);
 	logo.x=rCenterWidth(logo);
-	logo.y=47;
+	logo.y=70;
 	logo.alpha=0;
 	//centers
 	var centers = getBitmap(imgList['centers']);
@@ -216,6 +218,12 @@ function homePage(){
 //	Title.alpha=0;
 //	bigAndSmall(Title,2,2,1.0,0.02,0,true);
 	//逐层显示
+	//手
+	var hand = getBitmap(imgList['hand']);
+	hand.x = rCenterWidth(hand);
+	home.addChild(hand);
+	hand.y = 1020;
+	hand.alpha = 0;
 	LTweenLite.to(logo,0.5,{alpha:1.0}).to(Title44,0.6,{alpha:1.0,onComplete:function(){
 		Title4.visible = true;
 		
@@ -223,10 +231,21 @@ function homePage(){
 		LTweenLite.to(flower,0.6,{alpha:1.0});
 		LTweenLite.to(gongBottom,0.6,{alpha:1.0}).to(hit,0.6,{alpha:1.0,onComplete:function(){
 			LTweenLite.to(hit,1.0,{y:950,x:345,scaleX:1.1,sacleY:1.1,rotate:20,loop:true}).to(hit,1.0,{y:970,x:350,rotate:0,scaleX:1.0,sacleY:1.0});
+			hand.alpha = 1;
+			var hTween = LTweenLite.to(hand, 0.5, {
+				y: 1000,
+				alpha: 0,
+				loop: true,
+				onComplete: function() {
+					hand.alpha = 1;
+					hand.y = 1020;
+				}
+			});
 			var hitLayer = new LSprite();
 			home.addChild(hitLayer);
 			hitLayer.graphics.drawRect(0,"#ed2456",[282,891,185,185],true,'rgba(0,0,0,0)');
 			hitLayer.addEventListener(LMouseEvent.MOUSE_DOWN,function(){
+				hand.remove();
 				hitLayer.removeEventListener(LMouseEvent.MOUSE_DOWN);
 				hitGong();
 			});
@@ -283,12 +302,26 @@ function hitGong(){
 	hitBig.x=350;
 	hitBig.y=680;
 	var hitTween = LTweenLite.to(hitBig,1.0,{y:660,x:345,scaleX:1.1,sacleY:1.1,rotate:20,loop:true}).to(hitBig,1.0,{y:680,x:350,rotate:0,scaleX:1.0,sacleY:1.0});
+	//手
+	var hand = getBitmap(imgList['hand']);
+	hand.x = rCenterWidth(hand);
+	hand.y = 780;
+	gongLayer.addChild(hand);
+	var hTween = LTweenLite.to(hand, 0.5, {
+		y: 740,
+		alpha: 0,
+		loop: true,
+		onComplete: function() {
+			hand.alpha = 1;
+			hand.y = 780;
+		}
+	});
 	//地图
 	var lmap = getBitmap(imgList['map']);
 	gongLayer.addChild(lmap);
 	lmap.x=29;
 	lmap.y=900;
-	lmap.alpha=0;
+	lmap.alpha=0.3;
 	var shape = [];
 	for(var i=0;i<10;i++)
 	{
@@ -297,8 +330,8 @@ function hitGong(){
 	}
 	//光
 	var lList = [];
-	var lLx = [525,275,118,180,380,375,395,454,625,630];
-	var lLy = [980,885,962,1060,920,1040,1095,915,915,1110];
+	var lLx = [525,275,118,180,380,360,395,454,625,630];
+	var lLy = [980,885,970,1060,920,1025,1095,915,915,1110];
 	for(var i=0;i<lLx.length;i++)
 	{
 		if(i==0)
@@ -314,51 +347,98 @@ function hitGong(){
 	}
 	
 	
-	var lLxr= [560,290,130,197,400,387,415,475,638,642];
-	var lLyr = [1028,908,985,1085,942,1065,1120,940,940,1135];
-	//数学计算
-	function ry(x1,y1,x2,y2,x)
-	{
-		var k = (y2-y1)/(x2-x1);
-		var b = y1-k*x1;
-		var y = k*x+b;
-		return y;
-	}
-	var lz = [];
-	var lx = [];
-	var ly = [];
-	var lx1 = [];
-	var ly1 = [];
-	function lines(i,time){
-		lx[i] = lLxr[0];
-		ly[i] = lLyr[0];
-		lx1[i];
-		ly1[i];	
-		lz[i] = setInterval(function(){
-			if(lLxr[0]<lLxr[i])
+//	var lLxr= [560,290,130,197,400,387,415,475,638,642];
+//	var lLyr = [1028,908,985,1085,942,1065,1120,940,940,1135];
+//	//数学计算
+//	function ry(x1,y1,x2,y2,x)
+//	{
+//		var k = (y2-y1)/(x2-x1);
+//		var b = y1-k*x1;
+//		var y = k*x+b;
+//		return y;
+//	}
+//	var lz = [];
+//	var lx = [];
+//	var ly = [];
+//	var lx1 = [];
+//	var ly1 = [];
+//	function lines(i,time){
+//		lx[i] = lLxr[0];
+//		ly[i] = lLyr[0];
+//		lx1[i];
+//		ly1[i];	
+//		lz[i] = setInterval(function(){
+//			if(lLxr[0]<lLxr[i])
+//			{
+//				lx1[i]=lx[i]+6;
+//			}else{
+//				lx1[i]=lx[i]-6;
+//			}
+//			
+//			ly1[i] = ry(lLxr[0],lLyr[0],lLxr[i],lLyr[i],lx[i]);
+//			shape[i].graphics.drawLine(2,"rgba(232,208,156,0.75)", [lx[i], ly[i], lx1[i], ly1[i]]);
+//			if(lLxr[0]<lLxr[i])
+//			{
+//				if(lLxr[i]-6<lx[i])
+//				{
+//					clearInterval(lz[i]);
+//				}
+//			}else{
+//				if(lLxr[i]+6>lx[i])
+//				{
+//					clearInterval(lz[i]);
+//				}	
+//			}
+//			
+//			lx[i] = lx1[i];
+//			ly[i] = ly1[i];
+//		},time);
+//	}
+	var nlx = [281,451,123,374,215,162,99,89];
+	var nly = [162,111,112,105,53,96,116,105];
+	var x = [285,122,445,190,358,400,555,550];
+	var y = [875,928,926,980,1015,1030,1020,932];
+	
+	var lineses = [];
+	var vz = [];
+	var vx = [];
+	function lined(i,time){
+		if(i<=5)
+		{
+			vx[i]=nlx[i];
+		}else{
+			vx[i]=0;
+		}
+		vz[i] = setInterval(function(){
+			if(i<=5)
 			{
-				lx1[i]=lx[i]+6;
-			}else{
-				lx1[i]=lx[i]-6;
-			}
-			
-			ly1[i] = ry(lLxr[0],lLyr[0],lLxr[i],lLyr[i],lx[i]);
-			shape[i].graphics.drawLine(2,"rgba(232,208,156,0.75)", [lx[i], ly[i], lx1[i], ly1[i]]);
-			if(lLxr[0]<lLxr[i])
-			{
-				if(lLxr[i]-6<lx[i])
+				if(vx[i] != nlx[i])
 				{
-					clearInterval(lz[i]);
+					lineses[i].remove();
+				}
+				lineses[i] = new LBitmap(new LBitmapData(imgList['line0'+(i+1)],vx[i],0,nlx[i],nly[i]));
+				lineses[i].x = x[i]+nlx[i]-lineses[i].getWidth();		
+				lineses[i].y = y[i]+nly[i]-lineses[i].getHeight();
+				gongLayer.addChild(lineses[i]);
+				vx[i]-=2;
+				if(vx[i]<1){
+					clearInterval(vz[i]);
 				}
 			}else{
-				if(lLxr[i]+6>lx[i])
+				if(vx[i] != 0)
 				{
-					clearInterval(lz[i]);
-				}	
+					lineses[i].remove();
+				}
+				lineses[i] = new LBitmap(new LBitmapData(imgList['line0'+(i+1)],0,0,vx[i],nly[i]));
+				lineses[i].x = x[i];		
+				lineses[i].y = y[i]+nly[i]-lineses[i].getHeight();
+				gongLayer.addChild(lineses[i]);
+				vx[i]+=4;
+				if(vx[i]>nlx[i]){
+					
+					clearInterval(vz[i]);
+				}
 			}
-			
-			lx[i] = lx1[i];
-			ly[i] = ly1[i];
 		},time);
 	}
 	//金粉
@@ -389,6 +469,8 @@ function hitGong(){
 	hitLayer.graphics.drawRect(0,"#ed2456",[190,525,370,370],true,'rgba(0,0,0,0)');
 	hitLayer.addEventListener(LMouseEvent.MOUSE_DOWN,function(){
 		hitLayer.removeEventListener(LMouseEvent.MOUSE_DOWN);
+		LTweenLite.remove(hTween);
+		hand.remove();
 		LTweenLite.remove(hitTween);
 		LTweenLite.to(hitBig,0.5,{y:640,x:345,scaleX:1.4,sacleY:1.4,rotate:30}).to(hitBig,0.25,{y:680,x:350,rotate:0,scaleX:1.0,sacleY:1.0,onComplete:function(){
 			var g = 4;
@@ -422,21 +504,20 @@ function hitGong(){
 						clearInterval(str);
 						LTweenLite.to(gongLayer,1.5,{onComplete:function(){
 							document.getElementById('hj').pause();
-							setTimeout(index,1000);
+							setTimeout(index,2000);
 							
 						},onStart:function(){
 							setTimeout(function(){
 								document.getElementById('gong').pause();
 								document.getElementById('hj').play();
-								lines(1,1);
-								lines(2,1);
-								lines(3,1);
-								lines(4,5);
-								lines(5,5);
-								lines(6,5);
-								lines(7,5);
-								lines(8,5);
-								lines(9,5);
+								lined(0,5);
+								lined(1,1);
+								lined(2,10);
+								lined(3,1);
+								lined(4,8);
+								lined(5,10);
+								lined(6,10);
+								lined(7,10);
 							},500);
 						}});
 					}
@@ -470,7 +551,7 @@ function sharing(){
 	var logo = getBitmap(imgList['logo']);
 	share.addChild(logo);
 	logo.x=rCenterWidth(logo);
-	logo.y=330;
+	logo.y=370;
 	//分享标题01
 	var shareTitle01 = getBitmap(imgList['shareTitle01']);
 	share.addChild(shareTitle01);
@@ -527,6 +608,25 @@ function award(text,name){
 		useText.x = LGlobal.width-useText.getWidth();
 		awardLayer.addChild(useText);
 		useText.addEventListener(LMouseEvent.MOUSE_DOWN,use);
+		var close = getButton(imgList['close']);
+		close.x = LGlobal.width-close.getWidth()-15;
+		awardLayer.addChild(close);
+		close.addEventListener(LMouseEvent.MOUSE_DOWN,function(){
+			awardLayer.die();
+			awardLayer.remove();
+			index();
+		});
+	}
+	if(name == 'g1')
+	{
+		var close = getButton(imgList['close']);
+		close.x = LGlobal.width-close.getWidth()-15;
+		awardLayer.addChild(close);
+		close.addEventListener(LMouseEvent.MOUSE_DOWN,function(){
+			awardLayer.die();
+			awardLayer.remove();
+			awardGame();
+		});
 	}
 	//分享按钮
 	var shareRed = getButton(imgList['shareRed']);
@@ -886,9 +986,9 @@ function activityShow(){
 	//测试
 	var giftLayers = new LSprite();
 	var nullscroll = new LBitmap(new LBitmapData(imgList['null']));//实例化空白条
-	var scroll = new LScrollbar(giftLayers,621,830,{back:nullscroll,select:nullscroll,arraw:nullscroll},true,true);//滚动条
+	var scroll = new LScrollbar(giftLayers,625,830,{back:nullscroll,select:nullscroll,arraw:nullscroll},true,true);//滚动条
 	aLayer.addChild(scroll);//添加滚动条
-	scroll.x = 67;
+	scroll.x = 65;
 	scroll.y = 200;	
 	var show= getBitmap(imgList['show']);
 	giftLayers.addChild(show);
@@ -932,7 +1032,7 @@ function giftsCenter(){
 	 * 好太太智能晾衣架GW-5823  编号为g6
 	 * 好太太智能晾衣机GW-1583  编号为g7
 	 */
-	var gText = ["100元代金券","好太太安迪人偶","好太太抱枕","好太太铝合金衣架礼盒","好太太智能垃圾桶","好太太落地晾衣架GW-5823","好太太智能晾衣机GW-1583"];
+	var gText = ["100元智能代金券","安迪人偶","抱枕(价值58元）","铝合金衣架礼盒","智能垃圾桶","落地晾衣架","智能晾衣机GW-1583"];
 	$.get('json/gift.json',function(data){
 		for(var i=0;i<data.all.length;i++)
 		{
@@ -947,7 +1047,7 @@ function giftsCenter(){
 				case 4:
 				case 5:
 				case 6:
-					giftLayers.addChild(new giftes(data.all[i].id,0,141*i,0,2,gText[data.all[i].id],"订单号："+data.all[i].dan));
+					giftLayers.addChild(new giftes(data.all[i].id,0,141*i,0,2,gText[data.all[i].id],"快递单号："+data.all[i].dan));
 					break;
 			}
 		}

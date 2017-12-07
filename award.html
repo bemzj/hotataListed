@@ -62,12 +62,12 @@
 		<script type="text/javascript" src="js/ydui.js" ></script>
 		<script>
 			//弹窗
-			 function popWin(text1,text2){
+			 function popWin(text1){
 			 	/*
 			 	 * text1为第一句提示语
-			 	 * text2为第二句提示语
+		
 			 	*/
-			 	$('body').append('<div id="popWin"><div class="popWin"><img src="img/popWindow.png" /><div class="popIn"><ul><li><p>'+text1+'</p></li><li><p>'+text2+'</p></li><li><a href="###" class="confirm"><img src="img/confirm.png"/></a></li></ul></div></div></div>');
+			 	$('body').append('<div id="popWin"><div class="popWin"><img src="img/popWindow.png" /><div class="popIn"><ul><li><p>'+text1+'</p></li><li><p></p></li><li><a style="float: left;width: 40%;" href="###" class="confirm"><img src="img/confirm.png"/></a><a style="float: left;" href="###" class="confirm"><img src="img/confirm.png"/></a></li></ul></div></div></div>');
 				setTimeout(function(){
 					$('.confirm').bind('touchstart',function(){
 				 		$('#popWin').remove();
@@ -75,7 +75,7 @@
 				},500);
 				
 			 }
-			 new popWin("您输入的手机号码有误！","请重新输入！");
+			 new popWin("您输入的手机号码有误！<br/>请重新输入！");
 			!function () {
 		        var $target = $('#city');
 		
@@ -92,6 +92,12 @@
 		    }();	
 		    $('.confirm').bind('click',function(){
 		    	$('#popWin').hide();
+		    });
+		    $('#city').bind('click',function(){
+		    	document.getElementById('city').blur();
+		    });
+		    $('#city').focusin('click',function(){
+		    	document.getElementById('city').blur();
 		    });
 		    $(document).ready(function () {
 			　　$('body').height($(window).clientHeight);
